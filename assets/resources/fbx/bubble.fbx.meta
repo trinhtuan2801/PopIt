@@ -1,0 +1,76 @@
+{
+  "ver": "2.1.4",
+  "importer": "fbx",
+  "imported": true,
+  "uuid": "9af4baa8-4393-43f3-8166-f17581a6ed08",
+  "files": [],
+  "subMetas": {
+    "496ea": {
+      "importer": "gltf-mesh",
+      "uuid": "9af4baa8-4393-43f3-8166-f17581a6ed08@496ea",
+      "displayName": "",
+      "id": "496ea",
+      "name": "applePUPKA_098_0.mesh",
+      "userData": {
+        "gltfIndex": 0
+      },
+      "ver": "1.1.0",
+      "imported": true,
+      "files": [
+        ".bin",
+        ".json"
+      ],
+      "subMetas": {}
+    },
+    "06f26": {
+      "importer": "gltf-material",
+      "uuid": "9af4baa8-4393-43f3-8166-f17581a6ed08@06f26",
+      "displayName": "",
+      "id": "06f26",
+      "name": "_applePUPKAdefault.material",
+      "userData": {
+        "gltfIndex": 0
+      },
+      "ver": "1.0.14",
+      "imported": true,
+      "files": [
+        ".json"
+      ],
+      "subMetas": {}
+    },
+    "0b31c": {
+      "importer": "gltf-scene",
+      "uuid": "9af4baa8-4393-43f3-8166-f17581a6ed08@0b31c",
+      "displayName": "",
+      "id": "0b31c",
+      "name": "bubble.prefab",
+      "userData": {
+        "gltfIndex": 0
+      },
+      "ver": "1.0.12",
+      "imported": true,
+      "files": [
+        ".json"
+      ],
+      "subMetas": {}
+    }
+  },
+  "userData": {
+    "imageMetas": [],
+    "legacyFbxImporter": false,
+    "redirect": "9af4baa8-4393-43f3-8166-f17581a6ed08@0b31c",
+    "assetFinder": {
+      "meshes": [
+        "9af4baa8-4393-43f3-8166-f17581a6ed08@496ea"
+      ],
+      "skeletons": [],
+      "textures": [],
+      "materials": [
+        "9af4baa8-4393-43f3-8166-f17581a6ed08@06f26"
+      ],
+      "scenes": [
+        "9af4baa8-4393-43f3-8166-f17581a6ed08@0b31c"
+      ]
+    }
+  }
+}
