@@ -1,5 +1,5 @@
 
-import { _decorator, Component, Node, tween, Vec3, RigidBody, SliderComponent } from 'cc';
+import { _decorator, Component, Node, tween, Vec3, RigidBody, SliderComponent, SpriteFrame } from 'cc';
 import { Bubble } from './Bubble';
 const { ccclass, property } = _decorator;
 
@@ -18,6 +18,9 @@ export class BigPiece extends Component {
     @property
     isBonusLevel = false
 
+    @property
+    BonusLevelName = ''
+
     @property(Bubble)
     frontBubbles: Bubble[] = []
 
@@ -31,6 +34,9 @@ export class BigPiece extends Component {
     MaxTurnTime = 4
 
     total_pop_count = 0
+
+    @property(SpriteFrame)
+    LevelPicture: SpriteFrame = null
 
     onLoad()
     {

@@ -1,5 +1,5 @@
 
-import { _decorator, Component, Node, resources, SpriteFrame, Sprite, Label, LabelComponent, Material } from 'cc';
+import { _decorator, Component, Node, resources, Sprite, Label, LabelComponent, Material, SpriteFrame } from 'cc';
 import { GameController } from './GameController';
 import { ThemeInfo, UIShop } from './UIShop';
 const { ccclass, property } = _decorator;
@@ -22,7 +22,7 @@ export class ThemeItem extends Component {
     game: GameController = null
 
     @property(Sprite)
-    frame: Sprite = null
+    background: Sprite = null
 
     @property(Node)
     buy_button: Node = null
@@ -42,6 +42,15 @@ export class ThemeItem extends Component {
 
     material: Material = null
 
+    @property(Sprite)
+    frame: Sprite = null
+
+    @property(SpriteFrame)
+    framechoose: SpriteFrame = null
+
+    @property(SpriteFrame)
+    framenotchoose: SpriteFrame = null
+
     onLoad()
     {
         // this.unboughtState()
@@ -50,7 +59,7 @@ export class ThemeItem extends Component {
     init(info: ThemeInfo, game: GameController, UIShop: UIShop)
     {
         this.info = info
-        this.setFrame(info.url)
+        this.setBackground(info.url)
         this.coin_label.string = info.price.toString()
         this.game = game
         this.UIShop = UIShop
@@ -58,12 +67,12 @@ export class ThemeItem extends Component {
         if (info.isChosen) {this.chosenState(); this.UIShop.chosen_theme_item = this}
     }
 
-    setFrame(url: string)
+    setBackground(url: string)
     {
         let path = `Themes/${url}/spriteFrame`
         resources.load(path, SpriteFrame, (err, frame)=>
         {
-            this.frame.spriteFrame = frame
+            this.background.spriteFrame = frame
         })
         path = `Materials/${url}`
         resources.load(path, Material, (err, material)=>
@@ -96,6 +105,7 @@ export class ThemeItem extends Component {
 
     unChoose()
     {   
+        this.frame.spriteFrame = this.framenotchoose
         this.info.isChosen = false
         this.boughtState()
     }
@@ -116,6 +126,7 @@ export class ThemeItem extends Component {
 
     chosenState()
     {
+        this.frame.spriteFrame = this.framechoose
         this.buy_button.active = false
         this.choose_button.active = false
         this.chosen_button.active = true
