@@ -1,5 +1,5 @@
 
-import { _decorator, Component, Node, Prefab, instantiate, Color, Sprite, color, PageView, tween, Vec3, Vec2, find, MeshRenderer } from 'cc';
+import { _decorator, Component, Node, Prefab, instantiate, Color, Sprite, color, PageView, tween, Vec3, Vec2, find, MeshRenderer, SpriteFrame, Label } from 'cc';
 import { InitData } from './data';
 import { GameController } from './GameController';
 import { ThemeItem } from './ThemeItem';
@@ -71,6 +71,24 @@ export class UIShop extends Component {
     @property(MeshRenderer)
     ground_mesh: MeshRenderer = null
 
+    @property(Sprite)
+    theme_frame: Sprite = null
+
+    @property(Sprite)
+    collection_frame: Sprite = null
+
+    @property(Label)
+    theme_label: Label = null
+
+    @property(Label)
+    collection_label: Label = null
+
+    @property(SpriteFrame)
+    button_on: SpriteFrame = null
+
+    @property(SpriteFrame)
+    button_off: SpriteFrame = null
+
     onLoad()
     {
         this.game = find('GameController').getComponent(GameController)
@@ -96,16 +114,26 @@ export class UIShop extends Component {
 
     switchToThemeTab()
     {
-        this.tab_theme.setSiblingIndex(this.node.parent.children.length)
+        this.pageview_theme.node.active = true
+        this.pageview_collection.node.active = false
         this.indicator_theme.active = true
         this.indicator_collection.active = false
+        this.theme_frame.spriteFrame = this.button_on
+        this.collection_frame.spriteFrame = this.button_off
+        this.theme_label.color = color(255, 255, 255)
+        this.collection_label.color = color(0, 0, 80)
     }
 
     switchToCollectionTab()
     {
-        this.tab_collection.setSiblingIndex(this.node.parent.children.length)
+        this.pageview_theme.node.active = false
+        this.pageview_collection.node.active = true
         this.indicator_theme.active = false
         this.indicator_collection.active = true
+        this.theme_frame.spriteFrame = this.button_off
+        this.collection_frame.spriteFrame = this.button_on
+        this.theme_label.color = color(0, 0, 80)
+        this.collection_label.color = color(255, 255, 255)
     }
 
     init()
@@ -135,19 +163,9 @@ export class UIShop extends Component {
         }
     }
 
-    getRandNum()
-    {
-        let res = Math.floor(Math.random()*256)
-        return res
-    }
-
     createPage()
     {
         let page = instantiate(this.page_prefab)
-        // let r = this.getRandNum()
-        // let b = this.getRandNum()
-        // let g = this.getRandNum()
-        // page.getComponent(Sprite).color = new Color(r, g, b)
         return page
     }
 

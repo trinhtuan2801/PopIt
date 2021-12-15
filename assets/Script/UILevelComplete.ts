@@ -1,5 +1,5 @@
 
-import { _decorator, Component, Node, Label, LabelComponent, tween, Vec3, UIOpacity, find } from 'cc';
+import { _decorator, Component, Node, Label, LabelComponent, tween, Vec3, UIOpacity, find, Button, Sprite, SpriteFrame } from 'cc';
 import { GameController } from './GameController';
 const { ccclass, property } = _decorator;
 
@@ -20,6 +20,9 @@ export class UILevelComplete extends Component {
 
     @property(Node)
     UI: Node = null
+
+    @property(Sprite)
+    LevelPicture: Sprite = null
     
     @property(Node)
     nothanks: Node = null
@@ -34,15 +37,15 @@ export class UILevelComplete extends Component {
         this.game = find('GameController').getComponent(GameController)
     }
 
-    setScore(score: number)
+    init(score: number, picture: SpriteFrame)
     {
         this.score_label.string = score.toString()
+        this.LevelPicture.spriteFrame = picture
     }
 
     onClickNoThanks()
     {
         this.scheduleOnce(()=>{
-            this.game.setLevel()
             this.game.init()
         }, 1)
 
@@ -55,9 +58,13 @@ export class UILevelComplete extends Component {
         this.UI.scale = new Vec3(0, 0, 0)
         tween(this.UI).to(0.1, {scale: new Vec3(1, 1, 1)}).start()
         this.nothanks.active = true
+        this.nothanks.getComponent(Button).interactable = false
         this.nothanks.getComponent(UIOpacity).opacity = 0
         this.scheduleOnce(()=>{
-            tween(this.nothanks.getComponent(UIOpacity)).to(0.2, {opacity: 255}).start()
+            tween(this.nothanks.getComponent(UIOpacity)).to(0.2, {opacity: 255}).call(()=>
+            {
+                this.nothanks.getComponent(Button).interactable = true
+            }).start()
         }, 2)
     }
 

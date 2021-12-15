@@ -1,9 +1,8 @@
 
-import { _decorator, Component, Node, Label, ProgressBar, tween, Sprite, Color, UIOpacity, Vec3, find } from 'cc';
+import { _decorator, Component, Node, Label, ProgressBar, tween, Sprite, Color, UIOpacity, Vec3, find, SpriteFrame } from 'cc';
 import { UICongrats } from './UICongrats';
 import { UILevelComplete } from './UILevelComplete';
 import { UIShop } from './UIShop';
-import { UISoundSetting } from './UISoundSetting';
 const { ccclass, property } = _decorator;
 
 @ccclass('UIMainScreen')
@@ -14,14 +13,6 @@ export class UIMainScreen extends Component {
 
     @property(Label)
     level_label: Label = null
-
-    setLevel(level: string | number, isRelax: boolean)
-    {
-        if (!isRelax)
-            this.level_label.string = "Màn " + level
-        else
-            this.level_label.string = "Relax"
-    }
 
     @property(Node)
     setting_button: Node = null
@@ -49,11 +40,22 @@ export class UIMainScreen extends Component {
     @property(Node)
     face_on_bar: Node = null
 
-    @property(UISoundSetting)
-    UISoundSetting: UISoundSetting = null
-
     @property(Node)
     BonusPopUp: Node = null
+
+    @property(Node)
+    setting_cloak: Node = null
+
+    @property(Sprite)
+    sound_button: Sprite = null
+
+    @property(SpriteFrame)
+    sound_on_frame: SpriteFrame = null
+
+    @property(SpriteFrame)
+    sound_off_frame: SpriteFrame = null
+
+    isSoundOn = true
 
     start()
     {
@@ -70,6 +72,14 @@ export class UIMainScreen extends Component {
         this.UI.active = true
     }
 
+    setLevel(name: string | number, isRelax)
+    {
+        if (isRelax)
+            this.level_label.string = name.toString()      
+        else
+            this.level_label.string = "Level " + name
+    }
+
     onClickSettingButton()
     {   
         if (this.isSettingOpened) this.closeSetting()
@@ -80,7 +90,9 @@ export class UIMainScreen extends Component {
     {
         this.isSettingOpened = true
         tween(this.setting_button).to(0.2, {eulerAngles: new Vec3(0, 0, -90)}).start()
-        tween(this.setting_bar).to(0.2, {position: new Vec3(0, -240, 0)}).start()
+        tween(this.setting_bar).to(0.2, {position: new Vec3(0, -700, 0)}).start()
+        this.setting_cloak.active = true
+        tween(this.setting_cloak.getComponent(UIOpacity)).to(0.2, {opacity: 255}).start()
     }
 
     closeSetting()
@@ -88,6 +100,10 @@ export class UIMainScreen extends Component {
         this.isSettingOpened = false
         tween(this.setting_button).to(0.2, {eulerAngles: new Vec3(0, 0, 0)}).start()
         tween(this.setting_bar).to(0.2, {position: new Vec3(0, 0, 0)}).start()
+        tween(this.setting_cloak.getComponent(UIOpacity)).to(0.2, {opacity: 0})
+        .call(()=>{
+            this.setting_cloak.active = false
+        }).start()
     }
 
     setCoinLabel(amount: number)
@@ -101,29 +117,28 @@ export class UIMainScreen extends Component {
         this.closeSetting()
     }
 
-    openLevelComplete(score: number)
+    openLevelComplete(score: number, picture: SpriteFrame)
     {
-        this.UICongrats.showUI()
-        this.scheduleOnce(()=>{
-            this.UICongrats.hideUI()
-            this.scheduleOnce(()=>{
-                this.UILevelComplete.showUI()
-                this.UILevelComplete.setScore(score)
-            }, 1)
-            
-        }, 2)
+        this.UILevelComplete.init(score, picture)
+        this.UILevelComplete.showUI()
     }
 
     setBonusProgress(progress: number)
     {
         this.bonus_bar.progress = progress
         this.face_on_bar.setPosition(this.bonus_bar.totalLength*progress, 0)
-    }
-
-    openSoundSetting()
-    {
-        this.UISoundSetting.showUI()
-        this.closeSetting()
+        tween(this.face_on_bar).parallel(
+            tween()
+            .to(0.1, {eulerAngles: new Vec3(0, 0, 20)})
+            .to(0.1, {eulerAngles: new Vec3(0, 0, -20)})
+            .to(0.1, {eulerAngles: new Vec3(0, 0, 10)})
+            .to(0.1, {eulerAngles: new Vec3(0, 0, -10)})
+            .to(0.1, {eulerAngles: new Vec3(0, 0, 0)}),
+            tween()
+            .to(0.25, {scale: new Vec3(1.2, 1.2, 1.1)})
+            .to(0.25, {scale: new Vec3(1, 1, 1)})
+        )
+        .start()
     }
 
     showBonusPopUp()
@@ -143,6 +158,29 @@ export class UIMainScreen extends Component {
 
     }
 
+    showBonusBar()
+    {
+        this.bonus_bar.node.active = true
+        this.bonus_bar.node.scale = new Vec3(0,0,0)
+        tween(this.bonus_bar.node).to(0.2, {scale: new Vec3(0.9, 0.9, 0.9)}).start()
+    }
+
+    hideBonusBar()
+    {
+        this.bonus_bar.node.active = true
+        tween(this.bonus_bar.node).to(0.2, {scale: new Vec3(0, 0, 0)})
+        .call(()=>{
+            this.bonus_bar.node.active = false  
+        })
+        .start()
+    }
+
+    onClickSoundButton()
+    {
+        this.isSoundOn = !this.isSoundOn
+        if (this.isSoundOn) this.sound_button.spriteFrame = this.sound_on_frame
+        else this.sound_button.spriteFrame = this.sound_off_frame
+    }
 }
 
 /**

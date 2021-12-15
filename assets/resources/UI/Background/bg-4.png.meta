@@ -2,7 +2,7 @@
   "ver": "1.0.21",
   "importer": "image",
   "imported": true,
-  "uuid": "b6e3be56-7f5b-4675-a428-ccdf3a1496b3",
+  "uuid": "89a0aa00-6067-4f0d-831f-88bf2c992674",
   "files": [
     ".png",
     ".json"
@@ -10,8 +10,8 @@
   "subMetas": {
     "6c48a": {
       "importer": "texture",
-      "uuid": "b6e3be56-7f5b-4675-a428-ccdf3a1496b3@6c48a",
-      "displayName": "win2-img-frame",
+      "uuid": "89a0aa00-6067-4f0d-831f-88bf2c992674@6c48a",
+      "displayName": "bg-4",
       "id": "6c48a",
       "name": "texture",
       "userData": {
@@ -22,7 +22,7 @@
         "mipfilter": "none",
         "anisotropy": 0,
         "isUuid": true,
-        "imageUuidOrDatabaseUri": "b6e3be56-7f5b-4675-a428-ccdf3a1496b3"
+        "imageUuidOrDatabaseUri": "89a0aa00-6067-4f0d-831f-88bf2c992674"
       },
       "ver": "1.0.21",
       "imported": true,
@@ -33,8 +33,8 @@
     },
     "f9941": {
       "importer": "sprite-frame",
-      "uuid": "b6e3be56-7f5b-4675-a428-ccdf3a1496b3@f9941",
-      "displayName": "win2-img-frame",
+      "uuid": "89a0aa00-6067-4f0d-831f-88bf2c992674@f9941",
+      "displayName": "bg-4",
       "id": "f9941",
       "name": "spriteFrame",
       "userData": {
@@ -45,17 +45,17 @@
         "offsetY": 0,
         "trimX": 0,
         "trimY": 0,
-        "width": 521,
-        "height": 417,
-        "rawWidth": 521,
-        "rawHeight": 417,
+        "width": 1080,
+        "height": 1920,
+        "rawWidth": 1080,
+        "rawHeight": 1920,
         "borderTop": 0,
         "borderBottom": 0,
         "borderLeft": 0,
         "borderRight": 0,
         "packable": true,
         "isUuid": true,
-        "imageUuidOrDatabaseUri": "b6e3be56-7f5b-4675-a428-ccdf3a1496b3@6c48a",
+        "imageUuidOrDatabaseUri": "89a0aa00-6067-4f0d-831f-88bf2c992674@6c48a",
         "atlasUuid": ""
       },
       "ver": "1.0.9",
@@ -69,6 +69,6 @@
   "userData": {
     "hasAlpha": true,
     "type": "sprite-frame",
-    "redirect": "b6e3be56-7f5b-4675-a428-ccdf3a1496b3@f9941"
+    "redirect": "89a0aa00-6067-4f0d-831f-88bf2c992674@f9941"
   }
 }

@@ -9716,6 +9716,14 @@
     "plate": {
       "__id__": 708
     },
+    "isBonusLevel": false,
+    "BonusLevelName": "",
+    "frontBubbles": [],
+    "backBubbles": [],
+    "LevelPicture": {
+      "__uuid__": "b7d10c3b-e8ad-49e0-b740-2547e682945e@f9941",
+      "__expectedType__": "cc.SpriteFrame"
+    },
     "_id": ""
   },
   {

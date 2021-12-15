@@ -86,16 +86,17 @@ export class GameController extends Component {
         {
             this.gamemode = GameMode.BONUS
             this.gamestate = GameState.POP_BUBBLE
-            this.UIMainScreen.bonus_bar.node.active = true
+            this.UIMainScreen.showBonusBar()
             this.UIMainScreen.setBonusProgress(0)
+            this.setLevel(this.level_big_piece.BonusLevelName, true)
         }
         else
         {
             this.gamemode = GameMode.NORMAL 
             this.gamestate = GameState.MATCH_PIECE
-            this.UIMainScreen.bonus_bar.node.active = false
+            this.UIMainScreen.hideBonusBar()
+            this.setLevel(this.level + 1, false)
         } 
-        this.setLevel(this.gamemode == GameMode.BONUS)
         this.setCoin()
     }
 
@@ -106,9 +107,9 @@ export class GameController extends Component {
         this.UIMainScreen.setCoinLabel(this.coin)
     }
 
-    setLevel(isRelax: boolean)
+    setLevel(name: string | number, isRelax: boolean)
     {
-        this.UIMainScreen.setLevel(this.level + 1, isRelax)
+        this.UIMainScreen.setLevel(name, isRelax)
     }
 
     onTouchStart(touch: Touch)
@@ -183,7 +184,7 @@ export class GameController extends Component {
                 {
                     this.bubble_count = 0
                     if (this.level_big_piece.TurnTimeCount == this.level_big_piece.MaxTurnTime)
-                        this.winNormal()
+                        this.winBonus()
                     else
                         this.scheduleOnce(()=>{
                             this.level_big_piece.changeSide()
@@ -198,16 +199,19 @@ export class GameController extends Component {
     winNormal()
     {
         this.level ++
+        let picture = this.level_big_piece.LevelPicture.clone()
         this.level_big_piece.boom()
         this.scheduleOnce(()=>
         {
-            this.UIMainScreen.openLevelComplete(this.bubble_count)
+            this.UIMainScreen.openLevelComplete(this.bubble_count, picture)
         }, 1.2)
     }
 
     winBonus()
     {
-
+        this.winNormal()
+        this.scheduleOnce(()=>{this.UIMainScreen.hideBonusBar()}, 1)
+        
     }
 
     onTouchMove(touch: Touch)
