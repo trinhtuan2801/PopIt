@@ -126,8 +126,10 @@ export class UIMainScreen extends Component {
     setBonusProgress(progress: number)
     {
         this.bonus_bar.progress = progress
-        this.face_on_bar.setPosition(this.bonus_bar.totalLength*progress, 0)
+        // this.face_on_bar.setPosition(this.bonus_bar.totalLength*progress, 0)
         tween(this.face_on_bar).parallel(
+            tween()
+            .to(0.1, {position: new Vec3(this.bonus_bar.totalLength*progress, 0)}),
             tween()
             .to(0.1, {eulerAngles: new Vec3(0, 0, 20)})
             .to(0.1, {eulerAngles: new Vec3(0, 0, -20)})

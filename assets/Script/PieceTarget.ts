@@ -14,7 +14,7 @@ export class PieceTarget extends Component {
     onLoad()
     {
         let pos = this.node.getPosition()
-        pos.y = -5
+        pos.y -= 4.8
         this.node.setPosition(pos)
         this.scheduleOnce(()=>
         {
@@ -38,7 +38,7 @@ export class PieceTarget extends Component {
         let meshrender = node.getComponent(MeshRenderer)
         if (meshrender)
         {
-            if (!this.node.getComponent(MeshCollider))
+            if (!node.getComponent(MeshCollider))
             {
                 let mesh = meshrender.mesh
                 node.addComponent(MeshCollider)
@@ -59,16 +59,12 @@ export class PieceTarget extends Component {
 
     setCyan()
     {
-        this.node.children.forEach(child => {
-            this.setMaterial(child, this.cyan_material)
-        });
+        this.setMaterial(this.node.children[0], this.cyan_material)
     }
 
     setTransparent()
     {
-        this.node.children.forEach(child => {
-            this.setMaterial(child, this.trans_material)
-        });
+        this.setMaterial(this.node.children[0], this.trans_material)
     }
 
     setMaterial(node: Node, material: Material)
@@ -87,7 +83,12 @@ export class PieceTarget extends Component {
     removeMeshRenderer(node: Node)
     {
         let meshrender = node.getComponent(MeshRenderer)
-        if (meshrender) meshrender.visibility = 0
+        if (meshrender)
+        {
+            console.log(meshrender)
+            meshrender.enabled = false
+        } 
+
     }
 
 

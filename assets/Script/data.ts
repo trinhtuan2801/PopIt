@@ -10,8 +10,9 @@ export var InitData =
         new ThemeInfo('cyan', 50, false, false),
         new ThemeInfo('green', 50, false, false),
         new ThemeInfo('orange', 60, false, false),
-        new ThemeInfo('purple', 60, false, false),
-        new ThemeInfo('red', 100, false, false),
-        new ThemeInfo('yellow', 500, false, false),
+        new ThemeInfo('bg-1', 60, false, false),
+        new ThemeInfo('bg-2', 100, false, false),
+        new ThemeInfo('bg-3', 200, false, false),
+        new ThemeInfo('bg-4', 200, false, false),
     ],
 }

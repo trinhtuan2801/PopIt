@@ -1,0 +1,123 @@
+{
+  "ver": "2.1.4",
+  "importer": "fbx",
+  "imported": true,
+  "uuid": "2fdf6ab2-7cd8-445a-ab46-97ca91d0c7ae",
+  "files": [],
+  "subMetas": {
+    "1609a": {
+      "importer": "gltf-mesh",
+      "uuid": "2fdf6ab2-7cd8-445a-ab46-97ca91d0c7ae@1609a",
+      "displayName": "",
+      "id": "1609a",
+      "name": "AmongUs_Cut_04_Pupka_003_0.mesh",
+      "userData": {
+        "gltfIndex": 0
+      },
+      "ver": "1.1.0",
+      "imported": true,
+      "files": [
+        ".bin",
+        ".json"
+      ],
+      "subMetas": {}
+    },
+    "f713f": {
+      "importer": "gltf-embeded-image",
+      "uuid": "2fdf6ab2-7cd8-445a-ab46-97ca91d0c7ae@f713f",
+      "displayName": "",
+      "id": "f713f",
+      "name": "Map #25.image",
+      "userData": {
+        "gltfIndex": 0
+      },
+      "ver": "1.0.3",
+      "imported": true,
+      "files": [
+        ".png",
+        ".json"
+      ],
+      "subMetas": {}
+    },
+    "c21b7": {
+      "importer": "texture",
+      "uuid": "2fdf6ab2-7cd8-445a-ab46-97ca91d0c7ae@c21b7",
+      "displayName": "",
+      "id": "c21b7",
+      "name": "Map #25.texture",
+      "userData": {
+        "wrapModeS": "repeat",
+        "wrapModeT": "repeat",
+        "minfilter": "linear",
+        "magfilter": "linear",
+        "mipfilter": "none",
+        "anisotropy": 0,
+        "isUuid": true,
+        "imageUuidOrDatabaseUri": "2fdf6ab2-7cd8-445a-ab46-97ca91d0c7ae@f713f"
+      },
+      "ver": "1.0.21",
+      "imported": true,
+      "files": [
+        ".json"
+      ],
+      "subMetas": {}
+    },
+    "49b23": {
+      "importer": "gltf-material",
+      "uuid": "2fdf6ab2-7cd8-445a-ab46-97ca91d0c7ae@49b23",
+      "displayName": "",
+      "id": "49b23",
+      "name": "Material #49.material",
+      "userData": {
+        "gltfIndex": 0
+      },
+      "ver": "1.0.14",
+      "imported": true,
+      "files": [
+        ".json"
+      ],
+      "subMetas": {}
+    },
+    "e4ade": {
+      "importer": "gltf-scene",
+      "uuid": "2fdf6ab2-7cd8-445a-ab46-97ca91d0c7ae@e4ade",
+      "displayName": "",
+      "id": "e4ade",
+      "name": "AmongUs_Cut_04_Pupka_003_0.prefab",
+      "userData": {
+        "gltfIndex": 0
+      },
+      "ver": "1.0.12",
+      "imported": true,
+      "files": [
+        ".json"
+      ],
+      "subMetas": {}
+    }
+  },
+  "userData": {
+    "imageMetas": [
+      {
+        "name": "Map #25",
+        "uri": "2fdf6ab2-7cd8-445a-ab46-97ca91d0c7ae@f713f"
+      }
+    ],
+    "legacyFbxImporter": false,
+    "redirect": "2fdf6ab2-7cd8-445a-ab46-97ca91d0c7ae@e4ade",
+    "assetFinder": {
+      "meshes": [
+        "2fdf6ab2-7cd8-445a-ab46-97ca91d0c7ae@1609a"
+      ],
+      "skeletons": [],
+      "textures": [
+        "2fdf6ab2-7cd8-445a-ab46-97ca91d0c7ae@c21b7"
+      ],
+      "materials": [
+        "2fdf6ab2-7cd8-445a-ab46-97ca91d0c7ae@49b23"
+      ],
+      "scenes": [
+        "2fdf6ab2-7cd8-445a-ab46-97ca91d0c7ae@e4ade"
+      ]
+    }
+  }
+}

@@ -62,6 +62,7 @@ export class GameController extends Component {
 
     onLoad()
     {
+        console.log(PhysicsSystem)
         this.coin = InitData.coin
         this.setCoin()
         systemEvent.on(SystemEvent.EventType.TOUCH_START, this.onTouchStart, this);
@@ -114,7 +115,6 @@ export class GameController extends Component {
 
     onTouchStart(touch: Touch)
     {
-        // if (this.gamestate != GameState.MATCH_PIECE && this.gamestate != GameState.POP_BUBBLE) return
         if (this.UIMainScreen.isSettingOpened) this.UIMainScreen.closeSetting()
         this.camera_3d.screenPointToRay(touch.getLocationX(), touch.getLocationY(), this.ray);
         this.isHit = false
@@ -216,8 +216,6 @@ export class GameController extends Component {
 
     onTouchMove(touch: Touch)
     {
-        // if (this.gamestate != GameState.MATCH_PIECE && this.gamestate != GameState.POP_BUBBLE) return
-
         if (this.isHit && this.gamestate == GameState.MATCH_PIECE)
         {
             this.objectHit.getComponent(Piece).rayCast()
@@ -260,8 +258,6 @@ export class GameController extends Component {
 
     onTouchEnd()
     {
-        // if (this.gamestate != GameState.MATCH_PIECE && this.gamestate != GameState.POP_BUBBLE) return
-
         if (this.gamestate == GameState.MATCH_PIECE && this.isHit)
         {
             let piece = this.objectHit.getComponent(Piece)

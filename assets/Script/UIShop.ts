@@ -1,5 +1,5 @@
 
-import { _decorator, Component, Node, Prefab, instantiate, Color, Sprite, color, PageView, tween, Vec3, Vec2, find, MeshRenderer, SpriteFrame, Label } from 'cc';
+import { _decorator, Component, Node, Prefab, instantiate, Color, Sprite, color, PageView, tween, Vec3, Vec2, find, MeshRenderer, SpriteFrame, Label, LabelShadow } from 'cc';
 import { InitData } from './data';
 import { GameController } from './GameController';
 import { ThemeItem } from './ThemeItem';
@@ -122,6 +122,10 @@ export class UIShop extends Component {
         this.collection_frame.spriteFrame = this.button_off
         this.theme_label.color = color(255, 255, 255)
         this.collection_label.color = color(0, 0, 80)
+        this.theme_label.getComponent(LabelShadow).enabled = true
+        this.collection_label.getComponent(LabelShadow).enabled = false
+        this.theme_label.node.setPosition(0, -5)
+        this.collection_label.node.setPosition(0, 0)
     }
 
     switchToCollectionTab()
@@ -134,6 +138,10 @@ export class UIShop extends Component {
         this.collection_frame.spriteFrame = this.button_on
         this.theme_label.color = color(0, 0, 80)
         this.collection_label.color = color(255, 255, 255)
+        this.theme_label.getComponent(LabelShadow).enabled = false
+        this.collection_label.getComponent(LabelShadow).enabled = true
+        this.theme_label.node.setPosition(0, 0)
+        this.collection_label.node.setPosition(0, -5)
     }
 
     init()
