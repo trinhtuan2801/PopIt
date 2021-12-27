@@ -69,12 +69,12 @@ export class ThemeItem extends Component {
 
     setBackground(url: string)
     {
-        let path = `Themes/${url}/spriteFrame`
+        let path = `themes/${url}/spriteFrame`
         resources.load(path, SpriteFrame, (err, frame)=>
         {
             this.background.spriteFrame = frame
         })
-        path = `Materials/${url}`
+        path = `Materials/themes/${url}`
         resources.load(path, Material, (err, material)=>
         {
             this.material = material

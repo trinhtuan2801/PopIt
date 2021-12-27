@@ -51,16 +51,17 @@ export class Piece extends Component {
         this.node.children.forEach(child => {this.addBubble(child)})
     }
 
-    addBubble(node: Node)
+    addBubble(hole: Node)
     {
-        if (node.name.includes('Hole'))
+        if (hole.name.includes('Hole'))
         {
             let bb = instantiate(this.bubble_prefab)
             this.node.addChild(bb)
-            bb.setPosition(node.getPosition())
-            let material = this.node.children[0].getComponent(MeshRenderer).getMaterial(0)
-            node.getComponent(MeshRenderer).setMaterial(material, 0)
+            bb.setPosition(hole.getPosition())
+            let material = hole.getComponent(MeshRenderer).getMaterial(0)
             bb.children[0].getComponent(MeshRenderer).setMaterial(material, 0)
+            let mesh = hole.getComponent(MeshRenderer).mesh
+            bb.children[0].getComponent(MeshRenderer).mesh = mesh
         }
     }
 
@@ -96,13 +97,8 @@ export class Piece extends Component {
         temppos.y = this.startpos.y + 3.5
         tween(this.node)
         .to(0.04, {position: temppos}, {easing: 'quadOut'})
-        // .to(0.05, {position: pos}, {easing: 'quadIn'})
         .start()
         tween(this.node)
-        // .to(0.15, {scale: new Vec3(0.97, 1, 1.03)}, {easing: 'quadOut'})
-        // .to(0.15, {scale: new Vec3(1.02, 1, 0.98)}, {easing: 'quadIn'})
-        // .to(0.15, {scale: new Vec3(0.99, 1, 1.01)}, {easing: 'quadOut'})
-        // .to(0.15, {scale: new Vec3(1, 1, 1)}, {easing: 'quadIn'})
         .to(0.15, {scale: new Vec3(0.95, 1, 1.05)}, {easing: 'quadOut'})
         .to(0.15, {scale: new Vec3(1, 1, 1)}, {easing: 'quadIn'})
         .start()
@@ -110,7 +106,6 @@ export class Piece extends Component {
 
     drop(isSmallStretch: boolean)
     {
-        let pos = this.node.getPosition()
         tween(this.node).to(0.2, {position: this.startpos}, {easing: 'quadOut'})
         .call(()=>
         {
@@ -138,7 +133,7 @@ export class Piece extends Component {
         this.isPickable = false
         let pos = this.target.node.getPosition()
         this.startpos = pos
-        this.startpos.y = 3
+        this.startpos.y += 4
         this.scheduleOnce(()=>{this.target.node.destroy()}, 0.1)
     }
 

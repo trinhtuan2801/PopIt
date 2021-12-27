@@ -1,0 +1,76 @@
+{
+  "ver": "2.1.4",
+  "importer": "fbx",
+  "imported": true,
+  "uuid": "6eabd590-fd46-44b9-9cfc-25ed81da82eb",
+  "files": [],
+  "subMetas": {
+    "7f042": {
+      "importer": "gltf-mesh",
+      "uuid": "6eabd590-fd46-44b9-9cfc-25ed81da82eb@7f042",
+      "displayName": "",
+      "id": "7f042",
+      "name": "applePUPKA_099_0.mesh",
+      "userData": {
+        "gltfIndex": 0
+      },
+      "ver": "1.1.0",
+      "imported": true,
+      "files": [
+        ".bin",
+        ".json"
+      ],
+      "subMetas": {}
+    },
+    "06f26": {
+      "importer": "gltf-material",
+      "uuid": "6eabd590-fd46-44b9-9cfc-25ed81da82eb@06f26",
+      "displayName": "",
+      "id": "06f26",
+      "name": "_applePUPKAdefault.material",
+      "userData": {
+        "gltfIndex": 0
+      },
+      "ver": "1.0.14",
+      "imported": true,
+      "files": [
+        ".json"
+      ],
+      "subMetas": {}
+    },
+    "7b772": {
+      "importer": "gltf-scene",
+      "uuid": "6eabd590-fd46-44b9-9cfc-25ed81da82eb@7b772",
+      "displayName": "",
+      "id": "7b772",
+      "name": "applePUPKA_099_0.prefab",
+      "userData": {
+        "gltfIndex": 0
+      },
+      "ver": "1.0.12",
+      "imported": true,
+      "files": [
+        ".json"
+      ],
+      "subMetas": {}
+    }
+  },
+  "userData": {
+    "imageMetas": [],
+    "legacyFbxImporter": false,
+    "redirect": "6eabd590-fd46-44b9-9cfc-25ed81da82eb@7b772",
+    "assetFinder": {
+      "meshes": [
+        "6eabd590-fd46-44b9-9cfc-25ed81da82eb@7f042"
+      ],
+      "skeletons": [],
+      "textures": [],
+      "materials": [
+        "6eabd590-fd46-44b9-9cfc-25ed81da82eb@06f26"
+      ],
+      "scenes": [
+        "6eabd590-fd46-44b9-9cfc-25ed81da82eb@7b772"
+      ]
+    }
+  }
+}
