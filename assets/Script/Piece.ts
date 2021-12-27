@@ -58,6 +58,8 @@ export class Piece extends Component {
             let bb = instantiate(this.bubble_prefab)
             this.node.addChild(bb)
             bb.setPosition(hole.getPosition())
+            let angle_y = (hole.eulerAngles.y == 90) ? 90 : -90
+            bb.setRotationFromEuler(hole.eulerAngles.subtract3f(0, angle_y, 0))
             let material = hole.getComponent(MeshRenderer).getMaterial(0)
             bb.children[0].getComponent(MeshRenderer).setMaterial(material, 0)
             let mesh = hole.getComponent(MeshRenderer).mesh

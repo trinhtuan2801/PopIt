@@ -85,7 +85,6 @@ export class PieceTarget extends Component {
         let meshrender = node.getComponent(MeshRenderer)
         if (meshrender)
         {
-            console.log(meshrender)
             meshrender.enabled = false
         } 
 

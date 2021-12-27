@@ -15,6 +15,14 @@
     {
       "name": "bubble",
       "value": 2
+    },
+    {
+      "name": "light effect",
+      "value": 4
+    },
+    {
+      "name": "ground",
+      "value": 8
     }
   ]
 }

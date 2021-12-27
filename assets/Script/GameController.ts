@@ -8,9 +8,10 @@ import { UIMainScreen } from './UIMainScreen';
 
 const { ccclass, property } = _decorator;
 
-enum GameState {
+export enum GameState {
     MATCH_PIECE,
-    POP_BUBBLE
+    POP_BUBBLE,
+    STANDBY,
 }
 
 enum GameMode {
@@ -85,11 +86,12 @@ export class GameController extends Component {
         this.level_piece_count = this.level_big_piece.piece_amount
         if (this.level_big_piece.isBonusLevel)
         {
+            this.UIMainScreen.showBonusPopUp(this.level_big_piece.BonusLevelName)
             this.gamemode = GameMode.BONUS
-            this.gamestate = GameState.POP_BUBBLE
-            this.UIMainScreen.showBonusBar()
+            this.gamestate = GameState.STANDBY
             this.UIMainScreen.setBonusProgress(0)
             this.setLevel(this.level_big_piece.BonusLevelName, true)
+            this.UIMainScreen.hideLevelLabel()
         }
         else
         {
@@ -116,6 +118,7 @@ export class GameController extends Component {
     onTouchStart(touch: Touch)
     {
         if (this.UIMainScreen.isSettingOpened) this.UIMainScreen.closeSetting()
+        if (this.gamestate == GameState.STANDBY) return
         this.camera_3d.screenPointToRay(touch.getLocationX(), touch.getLocationY(), this.ray);
         this.isHit = false
 

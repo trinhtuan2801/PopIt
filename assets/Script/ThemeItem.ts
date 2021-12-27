@@ -53,7 +53,6 @@ export class ThemeItem extends Component {
 
     onLoad()
     {
-        // this.unboughtState()
     }
 
     init(info: ThemeInfo, game: GameController, UIShop: UIShop)
@@ -69,7 +68,8 @@ export class ThemeItem extends Component {
 
     setBackground(url: string)
     {
-        let path = `themes/${url}/spriteFrame`
+        let path = `Themes/${url}/spriteFrame`
+
         resources.load(path, SpriteFrame, (err, frame)=>
         {
             this.background.spriteFrame = frame

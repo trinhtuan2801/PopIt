@@ -1,5 +1,5 @@
 
-import { _decorator, Component, Node, Prefab, instantiate, Color, Sprite, color, PageView, tween, Vec3, Vec2, find, MeshRenderer, SpriteFrame, Label, LabelShadow } from 'cc';
+import { _decorator, Component, Node, Prefab, instantiate, Color, Sprite, color, PageView, tween, Vec3, Vec2, find, MeshRenderer, SpriteFrame, Label, LabelShadow, UIOpacity } from 'cc';
 import { InitData } from './data';
 import { GameController } from './GameController';
 import { ThemeItem } from './ThemeItem';
@@ -29,6 +29,17 @@ export class ThemeInfo {
         this.price = price
         this.isBought = isBought
         this.isChosen = isChosen
+    }
+}
+
+export class BonusLevelInfo {
+    index: number
+    isUnlock: boolean
+
+    constructor(index: number, isUnlock: boolean)
+    {
+        this.index = index
+        this.isUnlock = isUnlock
     }
 }
  
@@ -103,13 +114,15 @@ export class UIShop extends Component {
     showUI()
     {
         this.UI.active = true
-        tween(this.UI).to(0.1, {scale: new Vec3(1, 1, 1)}).start()
+        // this.UI.getComponent(UIOpacity).opacity = 255
+        // tween(this.UI.getComponent(UIOpacity)).to(0.1, {opacity: 255}).start()
     }
 
     hideUI()
     {
-        tween(this.UI).to(0.1, {scale: new Vec3(0, 0, 1)})
-        .call(()=>{this.UI.active = false}).start()
+        // tween(this.UI.getComponent(UIOpacity)).to(0.1,  {opacity: 0})
+        // .call(()=>{this.UI.active = false}).start()
+        this.UI.active = false
     }
 
     switchToThemeTab()

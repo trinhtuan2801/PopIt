@@ -1,6 +1,6 @@
 
 import { _decorator, Component, Node, Label, ProgressBar, tween, Sprite, Color, UIOpacity, Vec3, find, SpriteFrame } from 'cc';
-import { UICongrats } from './UICongrats';
+import { UIBonusPopUp } from './UIBonusPopUp';
 import { UILevelComplete } from './UILevelComplete';
 import { UIShop } from './UIShop';
 const { ccclass, property } = _decorator;
@@ -31,17 +31,14 @@ export class UIMainScreen extends Component {
     @property(UILevelComplete)
     UILevelComplete: UILevelComplete = null
 
-    @property(UICongrats)
-    UICongrats: UICongrats = null
-
     @property(ProgressBar)
     bonus_bar: ProgressBar = null
 
     @property(Node)
     face_on_bar: Node = null
 
-    @property(Node)
-    BonusPopUp: Node = null
+    @property(UIBonusPopUp)
+    BonusPopUp: UIBonusPopUp = null
 
     @property(Node)
     setting_cloak: Node = null
@@ -78,6 +75,16 @@ export class UIMainScreen extends Component {
             this.level_label.string = name.toString()      
         else
             this.level_label.string = "Level " + name
+    }
+
+    showLevelLabel()
+    {
+        this.level_label.node.active = true
+    }
+
+    hideLevelLabel()
+    {
+        this.level_label.node.active = false
     }
 
     onClickSettingButton()
@@ -143,21 +150,15 @@ export class UIMainScreen extends Component {
         .start()
     }
 
-    showBonusPopUp()
+    showBonusPopUp(name: string)
     {
-        this.BonusPopUp.active = true
-        this.BonusPopUp.getComponent(UIOpacity).opacity = 0
-        tween(this.BonusPopUp.getComponent(UIOpacity)).to(0.1, {opacity: 255}).start()
+        this.BonusPopUp.showUI()
+        this.BonusPopUp.setHeader(name)
     }
 
     hideBonusPopUp()
     {
-        tween(this.BonusPopUp.getComponent(UIOpacity)).to(0.1, {opacity: 0})
-        .call(()=>
-        {
-            this.BonusPopUp.active = false
-        }).start()
-
+        this.BonusPopUp.hideUI()
     }
 
     showBonusBar()
@@ -183,6 +184,7 @@ export class UIMainScreen extends Component {
         if (this.isSoundOn) this.sound_button.spriteFrame = this.sound_on_frame
         else this.sound_button.spriteFrame = this.sound_off_frame
     }
+
 }
 
 /**
