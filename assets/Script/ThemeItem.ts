@@ -1,7 +1,8 @@
 
-import { _decorator, Component, Node, resources, Sprite, Label, LabelComponent, Material, SpriteFrame } from 'cc';
+import { _decorator, Component, Node, resources, Sprite, Label, Material, SpriteFrame } from 'cc';
+import { ThemeInfo } from './data';
 import { GameController } from './GameController';
-import { ThemeInfo, UIShop } from './UIShop';
+import { UIShop } from './UIShop';
 const { ccclass, property } = _decorator;
 
 /**

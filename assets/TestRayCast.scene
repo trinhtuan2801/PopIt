@@ -4738,7 +4738,7 @@
         "__id__": 219
       }
     ],
-    "_active": true,
+    "_active": false,
     "_components": [
       {
         "__id__": 224
@@ -5888,7 +5888,7 @@
     "__prefab": null,
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 450,
+      "width": 150,
       "height": 500
     },
     "_anchorPoint": {
@@ -7391,6 +7391,10 @@
       "__uuid__": "e9c9a6a9-3b9b-48cf-a354-84c06a7146f2",
       "__expectedType__": "cc.Prefab"
     },
+    "collectionitem_prefab": {
+      "__uuid__": "d1da66c0-fbeb-4eb0-9ce2-d4a3d2139b81",
+      "__expectedType__": "cc.Prefab"
+    },
     "ground_mesh": {
       "__id__": 12
     },
@@ -8038,7 +8042,7 @@
         "__id__": 256
       }
     ],
-    "_active": true,
+    "_active": false,
     "_components": [
       {
         "__id__": 262

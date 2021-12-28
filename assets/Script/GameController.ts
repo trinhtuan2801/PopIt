@@ -1,5 +1,5 @@
 
-import { _decorator, Component, Node, Camera, geometry, systemEvent, PhysicsSystem, Touch, MeshRenderer, Material, Vec3, Prefab, Scene, director, ShadowStage, SceneAsset, ShadowFlow, Mask, instantiate, RaycastResult2D, PhysicsRayResult, TerrainLayer, Game, tween, SystemEvent } from 'cc';
+import { _decorator, Component, Node, Camera, geometry, systemEvent, PhysicsSystem, Touch, MeshRenderer, Material, Vec3, Prefab, Scene, director, ShadowStage, SceneAsset, ShadowFlow, Mask, instantiate, RaycastResult2D, PhysicsRayResult, TerrainLayer, Game, tween, SystemEvent, resources } from 'cc';
 import { BigPiece } from './BigPiece';
 import { Bubble } from './Bubble';
 import { InitData } from './data';
@@ -61,6 +61,8 @@ export class GameController extends Component {
 
     gamemode: GameMode = GameMode.NORMAL
 
+    isBonusFromChoose = false
+
     onLoad()
     {
         console.log(PhysicsSystem)
@@ -70,10 +72,17 @@ export class GameController extends Component {
         systemEvent.on(SystemEvent.EventType.TOUCH_MOVE, this.onTouchMove, this);
         systemEvent.on(SystemEvent.EventType.TOUCH_END, this.onTouchEnd, this);
         this.init()
+        // this.initBonusLevel('level 3')
     }
 
     init()
     {
+        if (this.level_big_piece && this.level_big_piece.isValid)
+        {
+            this.level_big_piece.destroy()
+            this.level_big_piece = null
+        } 
+        this.isBonusFromChoose = false
         this.isHit = false
         this.objectHit = null
         this.level_big_piece = null
@@ -84,6 +93,7 @@ export class GameController extends Component {
         this.level_big_piece.node.setPosition(0, 0, 0)
         this.level_bubble_count = this.level_big_piece.bubble_amount
         this.level_piece_count = this.level_big_piece.piece_amount
+        this.UIMainScreen.showLevelLabel()
         if (this.level_big_piece.isBonusLevel)
         {
             this.UIMainScreen.showBonusPopUp(this.level_big_piece.BonusLevelName)
@@ -101,6 +111,45 @@ export class GameController extends Component {
             this.setLevel(this.level + 1, false)
         } 
         this.setCoin()
+    }
+
+    initBonusLevel(name: string)
+    {
+        if (this.level_big_piece && this.level_big_piece.isValid)
+        {
+            this.level_big_piece.boom()
+            this.level_big_piece = null
+        } 
+        this.isBonusFromChoose = true
+        let path = `Prefab/Levels/${name}`
+        this.scheduleOnce(()=>
+        {
+            resources.load(path, Prefab, (err, prefab)=>
+            {
+                console.log(prefab)
+                this.isHit = false
+                this.objectHit = null
+                this.level_big_piece = null
+                this.piece_count = 0
+                this.bubble_count = 0
+                this.level_big_piece = instantiate(prefab).getComponent(BigPiece)
+                this.piece_node.addChild(this.level_big_piece.node)
+                this.level_big_piece.node.setPosition(0, 0, 0)
+                this.level_bubble_count = this.level_big_piece.bubble_amount
+                this.level_piece_count = this.level_big_piece.piece_amount
+                this.UIMainScreen.showLevelLabel()
+                if (this.level_big_piece.isBonusLevel)
+                {
+                    this.gamemode = GameMode.BONUS
+                    this.gamestate = GameState.POP_BUBBLE
+                    this.UIMainScreen.showBonusBar()
+                    this.UIMainScreen.setBonusProgress(0)
+                    this.setLevel(this.level_big_piece.BonusLevelName, true)
+                }
+                this.setCoin()
+            })
+        }, 1.1)
+        
     }
 
     setCoin(amount: number = this.coin)
@@ -212,8 +261,14 @@ export class GameController extends Component {
 
     winBonus()
     {
-        this.winNormal()
-        this.scheduleOnce(()=>{this.UIMainScreen.hideBonusBar()}, 1)
+        // this.winNormal()
+        if (!this.isBonusFromChoose) this.level ++ 
+        this.level_big_piece.boom()
+        this.scheduleOnce(()=>
+        {
+            this.UIMainScreen.hideBonusBar()
+            this.init()
+        }, 1)
         
     }
 
