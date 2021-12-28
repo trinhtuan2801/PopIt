@@ -1,5 +1,6 @@
 
 import { _decorator, Component, Node, Prefab, instantiate, Color, Sprite, color, PageView, tween, Vec3, Vec2, find, MeshRenderer, SpriteFrame, Label, LabelShadow, UIOpacity } from 'cc';
+import { CollectionItem } from './CollectionItem';
 import { InitData } from './data';
 import { GameController } from './GameController';
 import { ThemeItem } from './ThemeItem';
@@ -17,31 +18,7 @@ const { ccclass, property } = _decorator;
  *
  */
 
-export class ThemeInfo {
-    url: string //material and spriteframe
-    price: number
-    isBought: boolean
-    isChosen: boolean
 
-    constructor(url: string, price: number, isBought: boolean, isChosen: boolean)
-    {
-        this.url = url
-        this.price = price
-        this.isBought = isBought
-        this.isChosen = isChosen
-    }
-}
-
-export class BonusLevelInfo {
-    index: number
-    isUnlock: boolean
-
-    constructor(index: number, isUnlock: boolean)
-    {
-        this.index = index
-        this.isUnlock = isUnlock
-    }
-}
  
 @ccclass('UIShop')
 export class UIShop extends Component {
@@ -71,7 +48,10 @@ export class UIShop extends Component {
     pageview_collection: PageView = null
 
     @property(Prefab)
-    themeitem_prefab:Prefab = null
+    themeitem_prefab: Prefab = null
+
+    @property(Prefab)
+    collectionitem_prefab: Prefab = null
 
     game: GameController = null
 
@@ -159,6 +139,7 @@ export class UIShop extends Component {
 
     init()
     {
+        //theme
         let themes = InitData.themes
         let page_num = Math.ceil(InitData.themes.length / 4)
 
@@ -181,6 +162,29 @@ export class UIShop extends Component {
             pages[page_index].addChild(themeitem)
             themeitem.setPosition(pos[item_index])
             this.themeitems.push(themeitem.getComponent(ThemeItem))
+        }
+
+        //collection
+        let collections = InitData.collections
+        page_num = Math.ceil(InitData.collections.length / 4)
+
+        for (let i = 0; i < page_num; i++)
+        {
+            let page = this.createPage()
+            this.pageview_collection.addPage(page)
+        }
+
+        pages = this.pageview_collection.getPages()
+
+        for (let i = 0; i < collections.length; i++)
+        {
+            let collection = collections[i]
+            let collectionitem = instantiate(this.collectionitem_prefab)
+            collectionitem.getComponent(CollectionItem).init(collection, this.game, this)
+            let page_index = Math.floor(i / 4)
+            let item_index = i % 4
+            pages[page_index].addChild(collectionitem)
+            collectionitem.setPosition(pos[item_index])
         }
     }
 

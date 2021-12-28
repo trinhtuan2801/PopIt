@@ -11,7 +11,7 @@
     "6c48a": {
       "importer": "texture",
       "uuid": "b7d10c3b-e8ad-49e0-b740-2547e682945e@6c48a",
-      "displayName": "android-ic-1",
+      "displayName": "level 3",
       "id": "6c48a",
       "name": "texture",
       "userData": {
@@ -34,7 +34,7 @@
     "f9941": {
       "importer": "sprite-frame",
       "uuid": "b7d10c3b-e8ad-49e0-b740-2547e682945e@f9941",
-      "displayName": "android-ic-1",
+      "displayName": "level 3",
       "id": "f9941",
       "name": "spriteFrame",
       "userData": {
