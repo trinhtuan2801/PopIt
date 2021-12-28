@@ -61,12 +61,13 @@ export class UIMainScreen extends Component {
 
     hideUI()
     {
-        this.UI.active = false
+        tween(this.UI.getComponent(UIOpacity)).to(0.1, {opacity: 0}).call(()=>{this.UI.active = false}).start()
     }
 
     showUI()
     {
         this.UI.active = true
+        tween(this.UI.getComponent(UIOpacity)).to(0.1, {opacity: 255}).start()
     }
 
     setLevel(name: string | number, isRelax)
