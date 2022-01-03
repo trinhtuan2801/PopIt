@@ -80,6 +80,9 @@ export class UIShop extends Component {
     @property(SpriteFrame)
     button_off: SpriteFrame = null
 
+    @property(Node)
+    cloak: Node = null
+
     onLoad()
     {
         this.game = find('GameController').getComponent(GameController)
@@ -96,6 +99,8 @@ export class UIShop extends Component {
         this.UI.active = true
         // this.UI.getComponent(UIOpacity).opacity = 255
         // tween(this.UI.getComponent(UIOpacity)).to(0.1, {opacity: 255}).start()
+        this.cloak.active = true
+        tween(this.cloak.getComponent(UIOpacity)).to(0.1, {opacity: 255}).start()
     }
 
     hideUI()
@@ -103,6 +108,8 @@ export class UIShop extends Component {
         // tween(this.UI.getComponent(UIOpacity)).to(0.1,  {opacity: 0})
         // .call(()=>{this.UI.active = false}).start()
         this.UI.active = false
+        tween(this.cloak.getComponent(UIOpacity)).to(0.1, {opacity: 0})
+        .call(()=>{this.cloak.active = false}).start()
     }
 
     switchToThemeTab()

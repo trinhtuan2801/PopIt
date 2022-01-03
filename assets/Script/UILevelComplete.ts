@@ -32,6 +32,9 @@ export class UILevelComplete extends Component {
 
     game: GameController = null
 
+    @property(Node)
+    cloak: Node = null
+
     onLoad()
     {
         this.game = find('GameController').getComponent(GameController)
@@ -55,8 +58,9 @@ export class UILevelComplete extends Component {
     showUI()
     {
         this.UI.active = true
-        this.UI.scale = new Vec3(0, 0, 0)
         tween(this.UI).to(0.1, {scale: new Vec3(1, 1, 1)}).start()
+        this.cloak.active = true
+        tween(this.cloak.getComponent(UIOpacity)).to(0.1, {opacity: 255}).start()
         this.nothanks.active = true
         this.nothanks.getComponent(Button).interactable = false
         this.nothanks.getComponent(UIOpacity).opacity = 0
@@ -70,12 +74,18 @@ export class UILevelComplete extends Component {
 
     hideUI()
     {
-        tween(this.UI).to(0.1, {scale: new Vec3(0, 0, 1)})
+        tween(this.UI).to(0.1, {scale: new Vec3(0, 0, 0)})
         .call(()=>
         {
             this.nothanks.getComponent(UIOpacity).opacity = 0
             this.nothanks.active = false
             this.UI.active = false
+        }).start()
+
+        tween(this.cloak.getComponent(UIOpacity)).to(0.1, {opacity: 0})
+        .call(()=>
+        {
+            this.cloak.active = false
         }).start()
     }
 }

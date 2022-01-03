@@ -54,6 +54,7 @@ export class UIBonusPopUp extends Component {
         .call(()=>{
             this.game.UIMainScreen.showBonusBar()
             this.game.UIMainScreen.showLevelLabel()
+            this.game.UIMainScreen.showUI()
             Tween.stopAllByTarget(this.light_effect)
             this.UI.active = false
         }).start()

@@ -63,8 +63,7 @@ export class GameController extends Component {
 
     isBonusFromChoose = false
 
-    onLoad()
-    {
+    onLoad() {
         console.log(PhysicsSystem)
         this.coin = InitData.coin
         this.setCoin()
@@ -73,15 +72,16 @@ export class GameController extends Component {
         systemEvent.on(SystemEvent.EventType.TOUCH_END, this.onTouchEnd, this);
         this.init()
         // this.initBonusLevel('level 3')
+
+        console.log(FBInstant.player.getID());
+        
     }
 
-    init()
-    {
-        if (this.level_big_piece && this.level_big_piece.isValid)
-        {
+    init() {
+        if (this.level_big_piece && this.level_big_piece.isValid) {
             this.level_big_piece.destroy()
             this.level_big_piece = null
-        } 
+        }
         this.isBonusFromChoose = false
         this.isHit = false
         this.objectHit = null
@@ -94,8 +94,7 @@ export class GameController extends Component {
         this.level_bubble_count = this.level_big_piece.bubble_amount
         this.level_piece_count = this.level_big_piece.piece_amount
         this.UIMainScreen.showLevelLabel()
-        if (this.level_big_piece.isBonusLevel)
-        {
+        if (this.level_big_piece.isBonusLevel) {
             this.UIMainScreen.showBonusPopUp(this.level_big_piece.BonusLevelName)
             this.gamemode = GameMode.BONUS
             this.gamestate = GameState.STANDBY
@@ -103,29 +102,26 @@ export class GameController extends Component {
             this.setLevel(this.level_big_piece.BonusLevelName, true)
             this.UIMainScreen.hideLevelLabel()
         }
-        else
-        {
-            this.gamemode = GameMode.NORMAL 
+        else {
+            this.UIMainScreen.showUI()
+            this.gamemode = GameMode.NORMAL
             this.gamestate = GameState.MATCH_PIECE
             this.UIMainScreen.hideBonusBar()
             this.setLevel(this.level + 1, false)
-        } 
+        }
         this.setCoin()
     }
 
-    initBonusLevel(name: string)
-    {
-        if (this.level_big_piece && this.level_big_piece.isValid)
-        {
+    initBonusLevel(name: string) {
+        this.UIMainScreen.showUI()
+        if (this.level_big_piece && this.level_big_piece.isValid) {
             this.level_big_piece.boom()
             this.level_big_piece = null
-        } 
+        }
         this.isBonusFromChoose = true
         let path = `Prefab/Levels/${name}`
-        this.scheduleOnce(()=>
-        {
-            resources.load(path, Prefab, (err, prefab)=>
-            {
+        this.scheduleOnce(() => {
+            resources.load(path, Prefab, (err, prefab) => {
                 console.log(prefab)
                 this.isHit = false
                 this.objectHit = null
@@ -138,8 +134,7 @@ export class GameController extends Component {
                 this.level_bubble_count = this.level_big_piece.bubble_amount
                 this.level_piece_count = this.level_big_piece.piece_amount
                 this.UIMainScreen.showLevelLabel()
-                if (this.level_big_piece.isBonusLevel)
-                {
+                if (this.level_big_piece.isBonusLevel) {
                     this.gamemode = GameMode.BONUS
                     this.gamestate = GameState.POP_BUBBLE
                     this.UIMainScreen.showBonusBar()
@@ -149,46 +144,40 @@ export class GameController extends Component {
                 this.setCoin()
             })
         }, 1.1)
-        
+
     }
 
-    setCoin(amount: number = this.coin)
-    {
+    setCoin(amount: number = this.coin) {
         this.coin = amount
         InitData.coin = this.coin
         this.UIMainScreen.setCoinLabel(this.coin)
     }
 
-    setLevel(name: string | number, isRelax: boolean)
-    {
+    setLevel(name: string | number, isRelax: boolean) {
         this.UIMainScreen.setLevel(name, isRelax)
     }
 
-    onTouchStart(touch: Touch)
-    {
+    onTouchStart(touch: Touch) {
         if (this.UIMainScreen.isSettingOpened) this.UIMainScreen.closeSetting()
         if (this.gamestate == GameState.STANDBY) return
+        this.UIMainScreen.hideUI()
         this.camera_3d.screenPointToRay(touch.getLocationX(), touch.getLocationY(), this.ray);
         this.isHit = false
 
-        if (PhysicsSystem.instance.raycastClosest(this.ray)) 
-        {
+        if (PhysicsSystem.instance.raycastClosest(this.ray)) {
             const result = PhysicsSystem.instance.raycastClosestResult
             let hitnode = result.collider.node
 
-            if (this.gamestate == GameState.MATCH_PIECE)
-            {
-                if (hitnode.layer == 1 << 0 ) // layer piece
+            if (this.gamestate == GameState.MATCH_PIECE) {
+                if (hitnode.layer == 1 << 0) // layer piece
                 {
                     this.checkPiece(hitnode.parent, result.hitPoint)
                 }
-                else if (hitnode.layer == 1 << 1)
-                {
+                else if (hitnode.layer == 1 << 1) {
                     this.checkPiece(hitnode.parent.parent, result.hitPoint)
                 }
             }
-            else if (this.gamestate == GameState.POP_BUBBLE)
-            {
+            else if (this.gamestate == GameState.POP_BUBBLE) {
                 if (hitnode.layer == 1 << 1) // layer bubble
                 {
                     this.popBubble(hitnode.parent)
@@ -197,11 +186,9 @@ export class GameController extends Component {
         }
     }
 
-    checkPiece(piecenode: Node, hitpoint: Vec3)
-    {
+    checkPiece(piecenode: Node, hitpoint: Vec3) {
         let piece = piecenode.getComponent(Piece)
-        if (piece && piece.isPickable)
-        {
+        if (piece && piece.isPickable) {
             this.hit_diff = piecenode.getPosition().subtract(hitpoint)
             this.objectHit = piecenode
             this.isHit = true
@@ -209,85 +196,71 @@ export class GameController extends Component {
         }
     }
 
-    popBubble(bubblenode: Node)
-    {
+    popBubble(bubblenode: Node) {
         let bubble = bubblenode.getComponent(Bubble)
 
-        if (bubble && !bubble.isPop && bubble.isPopable)
-        {
+        if (bubble && !bubble.isPop && bubble.isPopable) {
             bubble.popIt()
-            this.bubble_count ++
-            this.coin ++
+            this.bubble_count++
+            this.coin++
             this.setCoin()
 
-            if (this.gamemode == GameMode.BONUS)
-            {
+            if (this.gamemode == GameMode.BONUS) {
                 let count = this.bubble_count + this.level_big_piece.TurnTimeCount * this.level_big_piece.bubble_amount
                 this.UIMainScreen.setBonusProgress(count / this.level_big_piece.total_pop_count)
             }
 
-            if (this.bubble_count == this.level_bubble_count)
-            {
-                if (this.gamemode == GameMode.NORMAL)
-                {
+            if (this.bubble_count == this.level_bubble_count) {
+                if (this.gamemode == GameMode.NORMAL) {
                     this.winNormal()
                 }
-                else if (this.gamemode == GameMode.BONUS)
-                {
+                else if (this.gamemode == GameMode.BONUS) {
                     this.bubble_count = 0
                     if (this.level_big_piece.TurnTimeCount == this.level_big_piece.MaxTurnTime)
                         this.winBonus()
                     else
-                        this.scheduleOnce(()=>{
+                        this.scheduleOnce(() => {
                             this.level_big_piece.changeSide()
                         }, 0.5)
                 }
             }
             this.level_big_piece.forceByPop(bubble.node)
         }
-        
+
     }
 
-    winNormal()
-    {
-        this.level ++
+    winNormal() {
+        this.level++
         let picture = this.level_big_piece.LevelPicture.clone()
         this.level_big_piece.boom()
-        this.scheduleOnce(()=>
-        {
+        this.scheduleOnce(() => {
+            this.UIMainScreen.showUI()
             this.UIMainScreen.openLevelComplete(this.bubble_count, picture)
         }, 1.2)
     }
 
-    winBonus()
-    {
+    winBonus() {
         // this.winNormal()
-        if (!this.isBonusFromChoose) this.level ++ 
+        if (!this.isBonusFromChoose) this.level++
         this.level_big_piece.boom()
-        this.scheduleOnce(()=>
-        {
+        this.scheduleOnce(() => {
             this.UIMainScreen.hideBonusBar()
             this.init()
         }, 1)
-        
+
     }
 
-    onTouchMove(touch: Touch)
-    {
-        if (this.isHit && this.gamestate == GameState.MATCH_PIECE)
-        {
+    onTouchMove(touch: Touch) {
+        if (this.isHit && this.gamestate == GameState.MATCH_PIECE) {
             this.objectHit.getComponent(Piece).rayCast()
             this.camera_3d.screenPointToRay(touch.getLocationX(), touch.getLocationY(), this.ray);
-            if (PhysicsSystem.instance.raycast(this.ray))
-            {
+            if (PhysicsSystem.instance.raycast(this.ray)) {
                 const result = PhysicsSystem.instance.raycastResults;
-                
-                for (let i = 0; i < result.length; i++) 
-                {
+
+                for (let i = 0; i < result.length; i++) {
                     const item = result[i];
-                    
-                    if (item.collider.node.uuid == this.ground.uuid) 
-                    {
+
+                    if (item.collider.node.uuid == this.ground.uuid) {
                         let pos = item.hitPoint
                         pos.x = pos.x + this.hit_diff.x
                         pos.z = pos.z + this.hit_diff.z
@@ -298,13 +271,11 @@ export class GameController extends Component {
                 }
             }
         }
-        else if (this.gamestate == GameState.POP_BUBBLE)
-        {
+        else if (this.gamestate == GameState.POP_BUBBLE) {
             this.camera_3d.screenPointToRay(touch.getLocationX(), touch.getLocationY(), this.ray);
-            if (PhysicsSystem.instance.raycastClosest(this.ray))
-            {
+            if (PhysicsSystem.instance.raycastClosest(this.ray)) {
                 const result = PhysicsSystem.instance.raycastClosestResult;
-                
+
                 let hitnode = result.collider.node
                 if (hitnode.layer == 1 << 1) // layer bubble
                 {
@@ -314,19 +285,16 @@ export class GameController extends Component {
         }
     }
 
-    onTouchEnd()
-    {
-        if (this.gamestate == GameState.MATCH_PIECE && this.isHit)
-        {
+    onTouchEnd() {
+        if (this.gamestate == GameState.MATCH_PIECE && this.isHit) {
             let piece = this.objectHit.getComponent(Piece)
-            if (piece.isMatch)
-            {
+            if (piece.isMatch) {
                 piece.match()
-                this.piece_count ++
+                this.piece_count++
                 if (this.piece_count == this.level_piece_count)
                     this.gamestate = GameState.POP_BUBBLE
-                
-            } 
+
+            }
             if (this.piece_count == this.level_piece_count)
                 piece.drop(false)
             else
