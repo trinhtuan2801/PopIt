@@ -1,0 +1,76 @@
+{
+  "ver": "2.1.4",
+  "importer": "fbx",
+  "imported": true,
+  "uuid": "64b7009b-8d02-4b67-bc09-76962bf2418b",
+  "files": [],
+  "subMetas": {
+    "c1755": {
+      "importer": "gltf-mesh",
+      "uuid": "64b7009b-8d02-4b67-bc09-76962bf2418b@c1755",
+      "displayName": "",
+      "id": "c1755",
+      "name": "Avocado_Cut_004_0.mesh",
+      "userData": {
+        "gltfIndex": 0
+      },
+      "ver": "1.1.0",
+      "imported": true,
+      "files": [
+        ".bin",
+        ".json"
+      ],
+      "subMetas": {}
+    },
+    "a6b0c": {
+      "importer": "gltf-material",
+      "uuid": "64b7009b-8d02-4b67-bc09-76962bf2418b@a6b0c",
+      "displayName": "",
+      "id": "a6b0c",
+      "name": "_Avocado_Cutdefault.material",
+      "userData": {
+        "gltfIndex": 0
+      },
+      "ver": "1.0.14",
+      "imported": true,
+      "files": [
+        ".json"
+      ],
+      "subMetas": {}
+    },
+    "f868d": {
+      "importer": "gltf-scene",
+      "uuid": "64b7009b-8d02-4b67-bc09-76962bf2418b@f868d",
+      "displayName": "",
+      "id": "f868d",
+      "name": "Avocado_Cut_004_0.prefab",
+      "userData": {
+        "gltfIndex": 0
+      },
+      "ver": "1.0.12",
+      "imported": true,
+      "files": [
+        ".json"
+      ],
+      "subMetas": {}
+    }
+  },
+  "userData": {
+    "imageMetas": [],
+    "legacyFbxImporter": false,
+    "redirect": "64b7009b-8d02-4b67-bc09-76962bf2418b@f868d",
+    "assetFinder": {
+      "meshes": [
+        "64b7009b-8d02-4b67-bc09-76962bf2418b@c1755"
+      ],
+      "skeletons": [],
+      "textures": [],
+      "materials": [
+        "64b7009b-8d02-4b67-bc09-76962bf2418b@a6b0c"
+      ],
+      "scenes": [
+        "64b7009b-8d02-4b67-bc09-76962bf2418b@f868d"
+      ]
+    }
+  }
+}

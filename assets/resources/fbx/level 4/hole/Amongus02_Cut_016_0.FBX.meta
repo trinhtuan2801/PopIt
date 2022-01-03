@@ -1,0 +1,123 @@
+{
+  "ver": "2.1.4",
+  "importer": "fbx",
+  "imported": true,
+  "uuid": "9f58d0a3-fabf-434d-a7c5-4157597145e6",
+  "files": [],
+  "subMetas": {
+    "c25ae": {
+      "importer": "gltf-mesh",
+      "uuid": "9f58d0a3-fabf-434d-a7c5-4157597145e6@c25ae",
+      "displayName": "",
+      "id": "c25ae",
+      "name": "Amongus02_Cut_016_0.mesh",
+      "userData": {
+        "gltfIndex": 0
+      },
+      "ver": "1.1.0",
+      "imported": true,
+      "files": [
+        ".bin",
+        ".json"
+      ],
+      "subMetas": {}
+    },
+    "f713f": {
+      "importer": "gltf-embeded-image",
+      "uuid": "9f58d0a3-fabf-434d-a7c5-4157597145e6@f713f",
+      "displayName": "",
+      "id": "f713f",
+      "name": "Map #25.image",
+      "userData": {
+        "gltfIndex": 0
+      },
+      "ver": "1.0.3",
+      "imported": true,
+      "files": [
+        ".png",
+        ".json"
+      ],
+      "subMetas": {}
+    },
+    "c21b7": {
+      "importer": "texture",
+      "uuid": "9f58d0a3-fabf-434d-a7c5-4157597145e6@c21b7",
+      "displayName": "",
+      "id": "c21b7",
+      "name": "Map #25.texture",
+      "userData": {
+        "wrapModeS": "repeat",
+        "wrapModeT": "repeat",
+        "minfilter": "linear",
+        "magfilter": "linear",
+        "mipfilter": "none",
+        "anisotropy": 0,
+        "isUuid": true,
+        "imageUuidOrDatabaseUri": "9f58d0a3-fabf-434d-a7c5-4157597145e6@f713f"
+      },
+      "ver": "1.0.21",
+      "imported": true,
+      "files": [
+        ".json"
+      ],
+      "subMetas": {}
+    },
+    "49b23": {
+      "importer": "gltf-material",
+      "uuid": "9f58d0a3-fabf-434d-a7c5-4157597145e6@49b23",
+      "displayName": "",
+      "id": "49b23",
+      "name": "Material #49.material",
+      "userData": {
+        "gltfIndex": 0
+      },
+      "ver": "1.0.14",
+      "imported": true,
+      "files": [
+        ".json"
+      ],
+      "subMetas": {}
+    },
+    "a636a": {
+      "importer": "gltf-scene",
+      "uuid": "9f58d0a3-fabf-434d-a7c5-4157597145e6@a636a",
+      "displayName": "",
+      "id": "a636a",
+      "name": "Amongus02_Cut_016_0.prefab",
+      "userData": {
+        "gltfIndex": 0
+      },
+      "ver": "1.0.12",
+      "imported": true,
+      "files": [
+        ".json"
+      ],
+      "subMetas": {}
+    }
+  },
+  "userData": {
+    "imageMetas": [
+      {
+        "name": "Map #25",
+        "uri": "9f58d0a3-fabf-434d-a7c5-4157597145e6@f713f"
+      }
+    ],
+    "legacyFbxImporter": false,
+    "redirect": "9f58d0a3-fabf-434d-a7c5-4157597145e6@a636a",
+    "assetFinder": {
+      "meshes": [
+        "9f58d0a3-fabf-434d-a7c5-4157597145e6@c25ae"
+      ],
+      "skeletons": [],
+      "textures": [
+        "9f58d0a3-fabf-434d-a7c5-4157597145e6@c21b7"
+      ],
+      "materials": [
+        "9f58d0a3-fabf-434d-a7c5-4157597145e6@49b23"
+      ],
+      "scenes": [
+        "9f58d0a3-fabf-434d-a7c5-4157597145e6@a636a"
+      ]
+    }
+  }
+}
