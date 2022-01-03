@@ -3,6 +3,7 @@ import { _decorator, Component, Node, Label, ProgressBar, tween, Sprite, Color, 
 import { UIBonusPopUp } from './UIBonusPopUp';
 import { UILevelComplete } from './UILevelComplete';
 import { UIShop } from './UIShop';
+import { UITutorial } from './UITutorial';
 const { ccclass, property } = _decorator;
 
 @ccclass('UIMainScreen')
@@ -53,6 +54,9 @@ export class UIMainScreen extends Component {
     sound_off_frame: SpriteFrame = null
 
     isSoundOn = true
+
+    @property(UITutorial)
+    UITutorial: UITutorial = null
 
     start()
     {
@@ -184,6 +188,11 @@ export class UIMainScreen extends Component {
         this.isSoundOn = !this.isSoundOn
         if (this.isSoundOn) this.sound_button.spriteFrame = this.sound_on_frame
         else this.sound_button.spriteFrame = this.sound_off_frame
+    }
+
+    openTutorial()
+    {
+        this.UITutorial.showUI()
     }
 
 }

@@ -30,7 +30,16 @@ export class CollectionItem extends Component {
     @property(Node)
     watch_button: Node = null
 
+    @property(Node)
+    play_button: Node = null
+
     info: CollectionInfo = null
+
+    start()
+    {
+        this.watch_button.active = true
+        this.play_button.active = false
+    }
 
     init(info: CollectionInfo, game: GameController, UIShop: UIShop)
     {
@@ -60,15 +69,13 @@ export class CollectionItem extends Component {
     unlockState()
     {
         this.watch_button.active = false
+        this.play_button.active = true
     }
 
     playThisLevel()
     {   
-        if (this.info.isUnlock)
-        {
-            this.game.initBonusLevel(this.info.Name)
-            this.UIShop.hideUI()
-        }
+        this.game.initBonusLevel(this.info.Name)
+        this.UIShop.hideUI()
     }
 }
 

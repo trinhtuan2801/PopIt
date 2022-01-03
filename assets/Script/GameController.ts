@@ -70,7 +70,7 @@ export class GameController extends Component {
         systemEvent.on(SystemEvent.EventType.TOUCH_START, this.onTouchStart, this);
         systemEvent.on(SystemEvent.EventType.TOUCH_MOVE, this.onTouchMove, this);
         systemEvent.on(SystemEvent.EventType.TOUCH_END, this.onTouchEnd, this);
-        // this.init()
+        this.init()
         // this.initBonusLevel('level 3')
 
         console.log(FBInstant.player.getID());
@@ -234,6 +234,7 @@ export class GameController extends Component {
         let picture = this.level_big_piece.LevelPicture.clone()
         this.level_big_piece.boom()
         this.scheduleOnce(() => {
+            this.UIMainScreen.showUI()
             this.UIMainScreen.openLevelComplete(this.bubble_count, picture)
         }, 1.2)
     }
