@@ -12,7 +12,7 @@
   },
   {
     "__type__": "cc.Node",
-    "_name": "level 5",
+    "_name": "level 5.1",
     "_objFlags": 0,
     "_parent": null,
     "_children": [
@@ -9342,7 +9342,7 @@
       "__expectedType__": "cc.SpriteFrame"
     },
     "material": {
-      "__uuid__": "0f15e6cd-a750-40fb-92f8-d5d1fa052f22",
+      "__uuid__": "f5116407-ecba-4f9f-9ada-88ddd7f0bd8f",
       "__expectedType__": "cc.Material"
     },
     "_id": ""

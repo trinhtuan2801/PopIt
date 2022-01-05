@@ -12,7 +12,7 @@
   },
   {
     "__type__": "cc.Node",
-    "_name": "level 1",
+    "_name": "level 1.2",
     "_objFlags": 0,
     "_parent": null,
     "_children": [
@@ -5747,7 +5747,7 @@
     },
     "_materials": [
       {
-        "__uuid__": "ad7be350-cf07-4d4b-8e36-e918f1296a91",
+        "__uuid__": "0f15e6cd-a750-40fb-92f8-d5d1fa052f22",
         "__expectedType__": "cc.Material"
       }
     ],
@@ -6856,7 +6856,7 @@
     },
     "_materials": [
       {
-        "__uuid__": "ad7be350-cf07-4d4b-8e36-e918f1296a91",
+        "__uuid__": "ad2a768a-1d16-49e4-9c10-47c92228811d",
         "__expectedType__": "cc.Material"
       }
     ],
@@ -7900,7 +7900,7 @@
     },
     "_materials": [
       {
-        "__uuid__": "ad7be350-cf07-4d4b-8e36-e918f1296a91",
+        "__uuid__": "ad2a768a-1d16-49e4-9c10-47c92228811d",
         "__expectedType__": "cc.Material"
       }
     ],
@@ -9209,7 +9209,7 @@
     },
     "_materials": [
       {
-        "__uuid__": "ad7be350-cf07-4d4b-8e36-e918f1296a91",
+        "__uuid__": "ad2a768a-1d16-49e4-9c10-47c92228811d",
         "__expectedType__": "cc.Material"
       }
     ],
@@ -10313,7 +10313,7 @@
     },
     "_materials": [
       {
-        "__uuid__": "ad7be350-cf07-4d4b-8e36-e918f1296a91",
+        "__uuid__": "ad2a768a-1d16-49e4-9c10-47c92228811d",
         "__expectedType__": "cc.Material"
       }
     ],
@@ -11881,7 +11881,7 @@
       "__expectedType__": "cc.SpriteFrame"
     },
     "material": {
-      "__uuid__": "ad7be350-cf07-4d4b-8e36-e918f1296a91",
+      "__uuid__": "eeebf974-5c13-45da-9286-b1d14ad113be",
       "__expectedType__": "cc.Material"
     },
     "_id": ""

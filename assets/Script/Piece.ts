@@ -1,6 +1,7 @@
 
 import { _decorator, Component, Node, tween, Vec3, director, MeshRenderer, Material, geometry, PhysicsSystem, resources, Prefab, instantiate, MeshCollider, find } from 'cc';
 import { BigPiece } from './BigPiece';
+import { CustomAngle } from './CustomAngle';
 import { PieceTarget } from './PieceTarget';
 const { ccclass, property } = _decorator;
 
@@ -22,6 +23,8 @@ export class Piece extends Component {
     @property(Prefab)
     bubble_prefab: Prefab = null
 
+    material: Material = null
+
     onLoad()
     {
         this.init()
@@ -41,6 +44,8 @@ export class Piece extends Component {
 
     init()
     {
+        this.material = this.node.parent.getComponent(BigPiece).material
+        this.node.children[0].getComponent(MeshRenderer).setMaterial(this.material, 0)
         this.startpos = this.node.getPosition()
         this.addMeshCollider(this.node.children[0]) 
         this.node.children.forEach(child => {
@@ -61,13 +66,13 @@ export class Piece extends Component {
         let bb = instantiate(this.bubble_prefab)
         this.node.addChild(bb)
         bb.setPosition(hole.getPosition())
-        let rot_y = hole.eulerAngles.y - (-90)
-        bb.setWorldRotationFromEuler(0, rot_y, 0)
-        let material = this.node.children[0].getComponent(MeshRenderer).getMaterial(0)
-        hole.getComponent(MeshRenderer).setMaterial(material, 0)
-        bb.children[0].getComponent(MeshRenderer).setMaterial(material, 0)
+        let angle = hole.getComponent(CustomAngle).angle
+        if (angle) bb.setRotationFromEuler(angle)
+        hole.getComponent(MeshRenderer).setMaterial(this.material, 0)
+        bb.children[0].getComponent(MeshRenderer).setMaterial(this.material, 0)
         let mesh = hole.getComponent(MeshRenderer).mesh
         bb.children[0].getComponent(MeshRenderer).mesh = mesh
+        this.addMeshCollider(bb.children[0])
     }
 
     addMeshCollider(node: Node)
@@ -121,7 +126,10 @@ export class Piece extends Component {
                 if (isSmallStretch)
                     bigpiece.smallStretch()
                 else
+                {
                     bigpiece.bigStretch()
+                    bigpiece.removeAllPieceTargets()
+                }
             }
             else
             {

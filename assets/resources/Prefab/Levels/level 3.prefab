@@ -1432,6 +1432,10 @@
       "__uuid__": "5c7142d9-13d6-4e2b-95f5-ca9855e8ed20@f9941",
       "__expectedType__": "cc.SpriteFrame"
     },
+    "material": {
+      "__uuid__": "94ee5fa3-1bb8-4715-92d9-3a2de787e7d9",
+      "__expectedType__": "cc.Material"
+    },
     "_id": ""
   },
   {
@@ -3001,6 +3005,7 @@
     "front_node": null,
     "back_node": null,
     "LevelPicture": null,
+    "material": null,
     "_id": "88xLZrQdNBf4sKvL3xL/YG"
   },
   {

@@ -352,7 +352,7 @@
     },
     "level_prefabs": [
       {
-        "__uuid__": "2b19b2d8-c4ea-4c62-b21a-cc55819dd638",
+        "__uuid__": "d0eee1ea-44ec-4b76-9897-ad3ae7231888",
         "__expectedType__": "cc.Prefab"
       },
       {
@@ -360,7 +360,7 @@
         "__expectedType__": "cc.Prefab"
       },
       {
-        "__uuid__": "62e33d40-6256-4556-a163-a932b2a259aa",
+        "__uuid__": "9a185ea0-c713-4aa4-bf0c-6f5eca0826ab",
         "__expectedType__": "cc.Prefab"
       },
       {
@@ -368,7 +368,51 @@
         "__expectedType__": "cc.Prefab"
       },
       {
-        "__uuid__": "d0eee1ea-44ec-4b76-9897-ad3ae7231888",
+        "__uuid__": "ac71b4d3-983d-4ebe-b899-ca1b3f0f9727",
+        "__expectedType__": "cc.Prefab"
+      },
+      {
+        "__uuid__": "54e7356c-7ca8-42af-a54f-2e4ec205b9d0",
+        "__expectedType__": "cc.Prefab"
+      },
+      {
+        "__uuid__": "ad99f893-9e3f-483c-9860-cacb92609b2f",
+        "__expectedType__": "cc.Prefab"
+      },
+      {
+        "__uuid__": "e0966e19-fc6d-40a4-b1a1-b82982d20526",
+        "__expectedType__": "cc.Prefab"
+      },
+      {
+        "__uuid__": "37eadccb-8bd3-4a4e-aafd-74eaefe591ba",
+        "__expectedType__": "cc.Prefab"
+      },
+      {
+        "__uuid__": "3f6f23de-67b3-47d0-a83b-826da3df5442",
+        "__expectedType__": "cc.Prefab"
+      },
+      {
+        "__uuid__": "179626b5-6121-4611-a386-2d3da98cd169",
+        "__expectedType__": "cc.Prefab"
+      },
+      {
+        "__uuid__": "e1e20da3-8b35-476d-9e32-6869b8e0937a",
+        "__expectedType__": "cc.Prefab"
+      },
+      {
+        "__uuid__": "2ad2a4b3-8fc9-4374-94bb-a123d744af2e",
+        "__expectedType__": "cc.Prefab"
+      },
+      {
+        "__uuid__": "5a175e28-e6c2-4e32-8a45-a4b87f0dc368",
+        "__expectedType__": "cc.Prefab"
+      },
+      {
+        "__uuid__": "62e33d40-6256-4556-a163-a932b2a259aa",
+        "__expectedType__": "cc.Prefab"
+      },
+      {
+        "__uuid__": "9e5bd01d-7f59-4c3b-9d92-711a9146ce21",
         "__expectedType__": "cc.Prefab"
       }
     ],

@@ -1,6 +1,7 @@
 
-import { _decorator, Component, Node, tween, Vec3, RigidBody, SliderComponent, SpriteFrame, NodePool } from 'cc';
+import { _decorator, Component, Node, tween, Vec3, RigidBody, SliderComponent, SpriteFrame, NodePool, Material } from 'cc';
 import { Bubble } from './Bubble';
+import { Piece } from './Piece';
 const { ccclass, property } = _decorator;
 
 @ccclass('BigPiece')
@@ -43,6 +44,9 @@ export class BigPiece extends Component {
     LevelPicture: SpriteFrame = null
 
     platepos_y = 0
+
+    @property(Material)
+    material: Material = null
 
     onLoad()
     {
@@ -96,6 +100,16 @@ export class BigPiece extends Component {
         .by(0.15, {position: new Vec3(0, 3, 0)}, {easing: 'quadOut'})
         .by(0.15, {position: new Vec3(0, -3, 0)}, {easing: 'quadIn'})
         .start()
+    }
+
+    removeAllPieceTargets()
+    {
+        this.plate.children.forEach(piece => {
+            if (piece.getComponent(Piece))
+            {
+                piece.getComponent(Piece).target.node.destroy()
+            }
+        });
     }
 
     boom()
