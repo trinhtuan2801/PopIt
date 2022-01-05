@@ -24,8 +24,9 @@ export class Piece extends Component {
 
     onLoad()
     {
+        this.init()
         let pos = this.node.getPosition()
-        pos.y = -5
+        pos.y -= 7
         this.node.setPosition(pos)
         let randtime = Math.random()*0.5
         this.scheduleOnce(()=>
@@ -36,35 +37,37 @@ export class Piece extends Component {
             .start()
         }, randtime)
         
-        this.init()
-        
     }
 
     init()
     {
         this.startpos = this.node.getPosition()
-        this.startpos.y = 2
         this.addMeshCollider(this.node.children[0]) 
         this.node.children.forEach(child => {
             this.addShadow(child)
         });
-        this.node.children.forEach(child => {this.addBubble(child)})
+        this.node.children.forEach(child =>
+        {
+            if (child.name.includes('Hole'))
+            {
+                this.addBubble(child)
+                this.addMeshCollider(child)
+            }
+        })
     }
 
     addBubble(hole: Node)
     {
-        if (hole.name.includes('Hole'))
-        {
-            let bb = instantiate(this.bubble_prefab)
-            this.node.addChild(bb)
-            bb.setPosition(hole.getPosition())
-            let angle_y = (hole.eulerAngles.y == 90) ? 90 : -90
-            bb.setRotationFromEuler(hole.eulerAngles.subtract3f(0, angle_y, 0))
-            let material = hole.getComponent(MeshRenderer).getMaterial(0)
-            bb.children[0].getComponent(MeshRenderer).setMaterial(material, 0)
-            let mesh = hole.getComponent(MeshRenderer).mesh
-            bb.children[0].getComponent(MeshRenderer).mesh = mesh
-        }
+        let bb = instantiate(this.bubble_prefab)
+        this.node.addChild(bb)
+        bb.setPosition(hole.getPosition())
+        let rot_y = hole.eulerAngles.y - (-90)
+        bb.setWorldRotationFromEuler(0, rot_y, 0)
+        let material = this.node.children[0].getComponent(MeshRenderer).getMaterial(0)
+        hole.getComponent(MeshRenderer).setMaterial(material, 0)
+        bb.children[0].getComponent(MeshRenderer).setMaterial(material, 0)
+        let mesh = hole.getComponent(MeshRenderer).mesh
+        bb.children[0].getComponent(MeshRenderer).mesh = mesh
     }
 
     addMeshCollider(node: Node)
@@ -136,7 +139,6 @@ export class Piece extends Component {
         let pos = this.target.node.getPosition()
         this.startpos = pos
         this.startpos.y += 4
-        this.scheduleOnce(()=>{this.target.node.destroy()}, 0.1)
     }
 
     rayCast()
