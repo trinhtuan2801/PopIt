@@ -352,7 +352,11 @@
     },
     "level_prefabs": [
       {
-        "__uuid__": "051ac6d7-c20d-4725-8f7f-a007115c62ee",
+        "__uuid__": "2b19b2d8-c4ea-4c62-b21a-cc55819dd638",
+        "__expectedType__": "cc.Prefab"
+      },
+      {
+        "__uuid__": "2b19b2d8-c4ea-4c62-b21a-cc55819dd638",
         "__expectedType__": "cc.Prefab"
       },
       {
@@ -360,10 +364,13 @@
         "__expectedType__": "cc.Prefab"
       },
       {
-        "__uuid__": "d0eee1ea-44ec-4b76-9897-ad3ae7231888",
+        "__uuid__": "051ac6d7-c20d-4725-8f7f-a007115c62ee",
         "__expectedType__": "cc.Prefab"
       },
-      null
+      {
+        "__uuid__": "d0eee1ea-44ec-4b76-9897-ad3ae7231888",
+        "__expectedType__": "cc.Prefab"
+      }
     ],
     "UIMainScreen": {
       "__id__": 17

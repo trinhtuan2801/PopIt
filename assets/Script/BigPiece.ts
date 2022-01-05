@@ -1,5 +1,5 @@
 
-import { _decorator, Component, Node, tween, Vec3, RigidBody, SliderComponent, SpriteFrame } from 'cc';
+import { _decorator, Component, Node, tween, Vec3, RigidBody, SliderComponent, SpriteFrame, NodePool } from 'cc';
 import { Bubble } from './Bubble';
 const { ccclass, property } = _decorator;
 
@@ -21,10 +21,14 @@ export class BigPiece extends Component {
     @property
     BonusLevelName = ''
 
-    @property(Bubble)
+    @property(Node)
+    front_node: Node = null
+
+    @property(Node)
+    back_node: Node = null
+
     frontBubbles: Bubble[] = []
 
-    @property(Bubble)
     backBubbles: Bubble[] = []
 
     isFrontBubble = true
@@ -38,15 +42,39 @@ export class BigPiece extends Component {
     @property(SpriteFrame)
     LevelPicture: SpriteFrame = null
 
+    platepos_y = 0
+
     onLoad()
     {
+        this.platepos_y = this.plate.position.y
         if (this.isBonusLevel)
         {
+            this.addFrontBackBubble()
             this.setBubblePopable(this.frontBubbles, this.isFrontBubble)
             this.setBubblePopable(this.backBubbles, !this.isFrontBubble)
         }
 
         this.total_pop_count = this.bubble_amount * (this.MaxTurnTime + 1)
+    }
+
+    addFrontBackBubble()
+    {
+        let addFunc = (father: Node, isFront) => 
+        {
+            father.children.forEach(piece => {
+                piece.children.forEach(node => {
+                    if (node.name.includes('Bubble'))
+                    {
+                        if (isFront)
+                            this.frontBubbles.push(node.getComponent(Bubble))
+                        else
+                            this.backBubbles.push(node.getComponent(Bubble))
+                    }
+                })
+            })
+        }
+        addFunc(this.front_node, true)
+        addFunc(this.back_node, false)
     }
 
     addToPlate(node: Node)
@@ -106,7 +134,7 @@ export class BigPiece extends Component {
         this.setBubblePopable(this.backBubbles, false)
 
         let newpos = this.plate.getPosition()
-        newpos.y = this.isFrontBubble ? 3 : 6
+        newpos.y = this.isFrontBubble ? this.platepos_y : this.platepos_y * 2
 
         tween(this.plate).to(0.5, {position: newpos}).start()
 

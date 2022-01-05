@@ -14,7 +14,7 @@ export class PieceTarget extends Component {
     onLoad()
     {
         let pos = this.node.getPosition()
-        pos.y -= 4.8
+        pos.y -= 5
         this.node.setPosition(pos)
         this.scheduleOnce(()=>
         {
@@ -24,11 +24,13 @@ export class PieceTarget extends Component {
             .start()
         }, 0.2)
         
-        this.addMeshCollider(this.node.children[0])
         this.node.children.forEach(child => {
+            this.addMeshCollider(child)
             this.removeShadow(child)
             if (child.name.includes('Hole'))
+            {
                 this.removeMeshRenderer(child)
+            }
         })
         this.setTransparent()
     }

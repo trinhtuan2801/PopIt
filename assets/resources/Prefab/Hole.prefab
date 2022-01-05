@@ -20,13 +20,10 @@
     "_components": [
       {
         "__id__": 2
-      },
-      {
-        "__id__": 5
       }
     ],
     "_prefab": {
-      "__id__": 7
+      "__id__": 5
     },
     "_lpos": {
       "__type__": "cc.Vec3",
@@ -36,10 +33,10 @@
     },
     "_lrot": {
       "__type__": "cc.Quat",
-      "x": 0,
-      "y": 0,
-      "z": 0,
-      "w": 1
+      "x": 1.232595164407831e-32,
+      "y": 0.7071067811865476,
+      "z": 8.659560562354933e-17,
+      "w": 0.7071067811865475
     },
     "_lscale": {
       "__type__": "cc.Vec3",
@@ -50,9 +47,9 @@
     "_layer": 1,
     "_euler": {
       "__type__": "cc.Vec3",
-      "x": 0,
-      "y": 0,
-      "z": 0
+      "x": 180,
+      "y": -90,
+      "z": 180
     },
     "_id": ""
   },
@@ -60,6 +57,7 @@
     "__type__": "cc.MeshRenderer",
     "_name": "",
     "_objFlags": 0,
+    "__editorExtras__": {},
     "node": {
       "__id__": 1
     },
@@ -105,36 +103,6 @@
     "_receiveShadow": false,
     "_recieveShadow": false,
     "_lightmapSize": 64
-  },
-  {
-    "__type__": "cc.MeshCollider",
-    "_name": "",
-    "_objFlags": 0,
-    "node": {
-      "__id__": 1
-    },
-    "_enabled": true,
-    "__prefab": {
-      "__id__": 6
-    },
-    "_material": null,
-    "_isTrigger": false,
-    "_center": {
-      "__type__": "cc.Vec3",
-      "x": 0,
-      "y": 0,
-      "z": 0
-    },
-    "_mesh": {
-      "__uuid__": "9af4baa8-4393-43f3-8166-f17581a6ed08@496ea",
-      "__expectedType__": "cc.Mesh"
-    },
-    "_convex": false,
-    "_id": ""
-  },
-  {
-    "__type__": "cc.CompPrefabInfo",
-    "fileId": "d2JdOjwL9Pq55TTTw+h1me"
   },
   {
     "__type__": "cc.PrefabInfo",
