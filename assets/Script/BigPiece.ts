@@ -1,7 +1,9 @@
 
-import { _decorator, Component, Node, tween, Vec3, RigidBody, SliderComponent, SpriteFrame, NodePool, Material } from 'cc';
+import { _decorator, Component, Node, tween, Vec3, RigidBody, SliderComponent, SpriteFrame, NodePool, Material, MeshRenderer, MeshCollider } from 'cc';
+import { BUILD } from 'cc/env';
 import { Bubble } from './Bubble';
 import { Piece } from './Piece';
+import { PieceTarget } from './PieceTarget';
 const { ccclass, property } = _decorator;
 
 @ccclass('BigPiece')
@@ -48,42 +50,80 @@ export class BigPiece extends Component {
     @property(Material)
     material: Material = null
 
+    match_height = 5
+
     onLoad()
     {
-        this.platepos_y = this.plate.position.y
+        //*
         if (this.isBonusLevel)
         {
             this.addFrontBackBubble()
             this.setBubblePopable(this.frontBubbles, this.isFrontBubble)
             this.setBubblePopable(this.backBubbles, !this.isFrontBubble)
         }
+        else
+        {
+            for (let i = 0; i < this.node.children.length; i++)
+            {
+                let child = this.node.children[i]
+                if (child.getComponent(PieceTarget))
+                {
+                    let pos = this.plate.getPosition()
+                    pos.y = child.position.y + this.match_height //do cao cua piece khi match
+                    this.plate.setPosition(pos)
+                    break
+                }
+            }
+        }
+        this.platepos_y = this.plate.getPosition().y
 
         this.total_pop_count = this.bubble_amount * (this.MaxTurnTime + 1)
+        this.smallStretch()
     }
 
     addFrontBackBubble()
     {
         let addFunc = (father: Node, isFront) => 
         {
-            father.children.forEach(piece => {
-                piece.children.forEach(node => {
-                    if (node.name.includes('Bubble'))
-                    {
-                        if (isFront)
-                            this.frontBubbles.push(node.getComponent(Bubble))
-                        else
-                            this.backBubbles.push(node.getComponent(Bubble))
-                    }
-                })
+            father.children.forEach(node => {
+                if (node.name.includes('Bubble'))
+                {
+                    this.addMeshCollider(node.children[0])
+                    if (isFront)
+                        this.frontBubbles.push(node.getComponent(Bubble))
+                    else
+                        this.backBubbles.push(node.getComponent(Bubble))
+                }
             })
         }
         addFunc(this.front_node, true)
         addFunc(this.back_node, false)
     }
 
+    addMeshCollider(node: Node)
+    {
+        let meshrender = node.getComponent(MeshRenderer)
+        if (meshrender)
+        {
+            if (!node.getComponent(MeshCollider))
+            {
+                node.addComponent(MeshCollider)
+            }
+            else
+            {
+                node.getComponent(MeshCollider).enabled = true
+            }
+            node.getComponent(MeshCollider).mesh = meshrender.mesh
+        }
+    }
+
     addToPlate(node: Node)
     {
         this.plate.addChild(node)
+        let pos = node.getPosition()
+        pos.y -= this.match_height
+        node.setPosition(pos)
+        console.log(node.position)
     }
 
     smallStretch()
@@ -148,7 +188,7 @@ export class BigPiece extends Component {
         this.setBubblePopable(this.backBubbles, false)
 
         let newpos = this.plate.getPosition()
-        newpos.y = this.isFrontBubble ? this.platepos_y : this.platepos_y * 2
+        // newpos.y = this.isFrontBubble ? this.platepos_y : this.platepos_y * 2
 
         tween(this.plate).to(0.5, {position: newpos}).start()
 

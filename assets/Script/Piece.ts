@@ -25,9 +25,16 @@ export class Piece extends Component {
 
     material: Material = null
 
+    bigpiece: BigPiece = null
+
     onLoad()
     {
         this.init()
+
+    }
+
+    appear()
+    {
         let pos = this.node.getPosition()
         pos.y -= 7
         this.node.setPosition(pos)
@@ -39,14 +46,23 @@ export class Piece extends Component {
             .by(0.15, {position: new Vec3(0, -1, 0)})
             .start()
         }, randtime)
-        
     }
 
     init()
     {
-        this.material = this.node.parent.getComponent(BigPiece).material
-        this.node.children[0].getComponent(MeshRenderer).setMaterial(this.material, 0)
         this.startpos = this.node.getPosition()
+        this.bigpiece = this.node.parent.getComponent(BigPiece)
+        if (this.node.parent.name == 'Plate') this.bigpiece = this.node.parent.parent.getComponent(BigPiece)
+        this.material = this.bigpiece.material
+        this.node.children[0].getComponent(MeshRenderer).setMaterial(this.material, 0)
+        if (this.bigpiece.isBonusLevel)
+        {
+            this.bigpiece.addToPlate(this.node)
+        }
+        else
+        {
+            this.appear()
+        }
         this.addMeshCollider(this.node.children[0]) 
         this.node.children.forEach(child => {
             this.addShadow(child)
@@ -80,12 +96,15 @@ export class Piece extends Component {
         let meshrender = node.getComponent(MeshRenderer)
         if (meshrender)
         {
-            if (!this.node.getComponent(MeshCollider))
+            if (!node.getComponent(MeshCollider))
             {
-                let mesh = meshrender.mesh
                 node.addComponent(MeshCollider)
-                node.getComponent(MeshCollider).mesh = mesh
             }
+            else
+            {
+                node.getComponent(MeshCollider).enabled = true
+            }
+            node.getComponent(MeshCollider).mesh = meshrender.mesh
         }
     }
 
@@ -102,9 +121,9 @@ export class Piece extends Component {
     pick()
     {
         let pos = this.node.getPosition()
-        pos.y = this.startpos.y + 3
+        pos.y = this.target.node.position.y + this.bigpiece.match_height + 2
         let temppos = pos.clone()
-        temppos.y = this.startpos.y + 3.5
+        temppos.y = this.startpos.y + this.bigpiece.match_height + 2.5
         tween(this.node)
         .to(0.04, {position: temppos}, {easing: 'quadOut'})
         .start()
@@ -137,7 +156,7 @@ export class Piece extends Component {
                 .to(0.15, {scale: new Vec3(0.97, 1, 1.03)}, {easing: 'quadOut'})
                 .to(0.15, {scale: new Vec3(1, 1, 1)}, {easing: 'quadIn'})
                 .start()
-            }
+            } 
         }).start()
     }
 
@@ -146,7 +165,7 @@ export class Piece extends Component {
         this.isPickable = false
         let pos = this.target.node.getPosition()
         this.startpos = pos
-        this.startpos.y += 4
+        this.startpos.y += this.bigpiece.match_height
     }
 
     rayCast()

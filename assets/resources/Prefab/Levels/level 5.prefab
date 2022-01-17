@@ -504,7 +504,7 @@
   },
   {
     "__type__": "cc.Node",
-    "_name": "Avocado_Cut_001_1",
+    "_name": "Avocado_Cut_001_1 target",
     "_objFlags": 0,
     "_parent": {
       "__id__": 1

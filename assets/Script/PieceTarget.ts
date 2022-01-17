@@ -13,17 +13,12 @@ export class PieceTarget extends Component {
 
     onLoad()
     {
-        let pos = this.node.getPosition()
-        pos.y -= 5
-        this.node.setPosition(pos)
-        this.scheduleOnce(()=>
-        {
-            tween(this.node)
-            .by(0.15, {position: new Vec3(0, 6, 0)})
-            .by(0.15, {position: new Vec3(0, -1, 0)})
-            .start()
-        }, 0.2)
-        
+        this.init()
+        this.appear()
+    }
+
+    init()
+    {
         this.node.children.forEach(child => {
             this.addMeshCollider(child)
             this.removeShadow(child)
@@ -33,6 +28,11 @@ export class PieceTarget extends Component {
             }
         })
         this.setTransparent()
+    }
+
+    appear()
+    {
+        
     }
 
     addMeshCollider(node: Node)

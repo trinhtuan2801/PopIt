@@ -90,7 +90,7 @@ export class GameController extends Component {
         this.bubble_count = 0
         this.level_big_piece = instantiate(this.level_prefabs[this.level % this.level_prefabs.length]).getComponent(BigPiece)
         this.piece_node.addChild(this.level_big_piece.node)
-        this.level_big_piece.node.setPosition(0, 0, 0)
+        console.log('big', this.level_big_piece.node.position.y)
         this.level_bubble_count = this.level_big_piece.bubble_amount
         this.level_piece_count = this.level_big_piece.piece_amount
         this.UIMainScreen.showLevelLabel()
@@ -130,7 +130,7 @@ export class GameController extends Component {
                 this.bubble_count = 0
                 this.level_big_piece = instantiate(prefab).getComponent(BigPiece)
                 this.piece_node.addChild(this.level_big_piece.node)
-                this.level_big_piece.node.setPosition(0, 0, 0)
+                // this.level_big_piece.node.setPosition(0, 0, 0)
                 this.level_bubble_count = this.level_big_piece.bubble_amount
                 this.level_piece_count = this.level_big_piece.piece_amount
                 this.UIMainScreen.showLevelLabel()
