@@ -1,0 +1,76 @@
+{
+  "ver": "2.1.4",
+  "importer": "fbx",
+  "imported": true,
+  "uuid": "7ac75438-71c2-40aa-9e87-2f6ed07d7170",
+  "files": [],
+  "subMetas": {
+    "42846": {
+      "importer": "gltf-material",
+      "uuid": "7ac75438-71c2-40aa-9e87-2f6ed07d7170@42846",
+      "displayName": "",
+      "id": "42846",
+      "name": "_S_Solar_Cut_Pupka_05default.material",
+      "userData": {
+        "gltfIndex": 0
+      },
+      "ver": "1.0.14",
+      "imported": true,
+      "files": [
+        ".json"
+      ],
+      "subMetas": {}
+    },
+    "8f098": {
+      "importer": "gltf-mesh",
+      "uuid": "7ac75438-71c2-40aa-9e87-2f6ed07d7170@8f098",
+      "displayName": "",
+      "id": "8f098",
+      "name": "S_Solar_Cut_Pupka_05_0.mesh",
+      "userData": {
+        "gltfIndex": 0
+      },
+      "ver": "1.1.0",
+      "imported": true,
+      "files": [
+        ".bin",
+        ".json"
+      ],
+      "subMetas": {}
+    },
+    "1302f": {
+      "importer": "gltf-scene",
+      "uuid": "7ac75438-71c2-40aa-9e87-2f6ed07d7170@1302f",
+      "displayName": "",
+      "id": "1302f",
+      "name": "S_Solar_Cut_Pupka_05_0.prefab",
+      "userData": {
+        "gltfIndex": 0
+      },
+      "ver": "1.0.12",
+      "imported": true,
+      "files": [
+        ".json"
+      ],
+      "subMetas": {}
+    }
+  },
+  "userData": {
+    "imageMetas": [],
+    "legacyFbxImporter": false,
+    "redirect": "7ac75438-71c2-40aa-9e87-2f6ed07d7170@1302f",
+    "assetFinder": {
+      "meshes": [
+        "7ac75438-71c2-40aa-9e87-2f6ed07d7170@8f098"
+      ],
+      "skeletons": [],
+      "textures": [],
+      "materials": [
+        "7ac75438-71c2-40aa-9e87-2f6ed07d7170@42846"
+      ],
+      "scenes": [
+        "7ac75438-71c2-40aa-9e87-2f6ed07d7170@1302f"
+      ]
+    }
+  }
+}

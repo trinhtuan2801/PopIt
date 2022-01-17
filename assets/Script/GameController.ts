@@ -167,7 +167,7 @@ export class GameController extends Component {
         if (PhysicsSystem.instance.raycastClosest(this.ray)) {
             const result = PhysicsSystem.instance.raycastClosestResult
             let hitnode = result.collider.node
-
+            console.log(result)
             if (this.gamestate == GameState.MATCH_PIECE) {
                 if (hitnode.layer == 1 << 0) // layer piece
                 {

@@ -1,0 +1,76 @@
+{
+  "ver": "2.1.4",
+  "importer": "fbx",
+  "imported": true,
+  "uuid": "e1cc7c90-832f-4a5e-8ffb-ba57adc7730f",
+  "files": [],
+  "subMetas": {
+    "ced5c": {
+      "importer": "gltf-mesh",
+      "uuid": "e1cc7c90-832f-4a5e-8ffb-ba57adc7730f@ced5c",
+      "displayName": "",
+      "id": "ced5c",
+      "name": "Baby_Yoda_pupki_020_0.mesh",
+      "userData": {
+        "gltfIndex": 0
+      },
+      "ver": "1.1.0",
+      "imported": true,
+      "files": [
+        ".bin",
+        ".json"
+      ],
+      "subMetas": {}
+    },
+    "681d3": {
+      "importer": "gltf-material",
+      "uuid": "e1cc7c90-832f-4a5e-8ffb-ba57adc7730f@681d3",
+      "displayName": "",
+      "id": "681d3",
+      "name": "_Baby-Yoda_pupkidefault.material",
+      "userData": {
+        "gltfIndex": 0
+      },
+      "ver": "1.0.14",
+      "imported": true,
+      "files": [
+        ".json"
+      ],
+      "subMetas": {}
+    },
+    "1354f": {
+      "importer": "gltf-scene",
+      "uuid": "e1cc7c90-832f-4a5e-8ffb-ba57adc7730f@1354f",
+      "displayName": "",
+      "id": "1354f",
+      "name": "Baby_Yoda_pupki_020_0.prefab",
+      "userData": {
+        "gltfIndex": 0
+      },
+      "ver": "1.0.12",
+      "imported": true,
+      "files": [
+        ".json"
+      ],
+      "subMetas": {}
+    }
+  },
+  "userData": {
+    "imageMetas": [],
+    "legacyFbxImporter": false,
+    "redirect": "e1cc7c90-832f-4a5e-8ffb-ba57adc7730f@1354f",
+    "assetFinder": {
+      "meshes": [
+        "e1cc7c90-832f-4a5e-8ffb-ba57adc7730f@ced5c"
+      ],
+      "skeletons": [],
+      "textures": [],
+      "materials": [
+        "e1cc7c90-832f-4a5e-8ffb-ba57adc7730f@681d3"
+      ],
+      "scenes": [
+        "e1cc7c90-832f-4a5e-8ffb-ba57adc7730f@1354f"
+      ]
+    }
+  }
+}

@@ -41,6 +41,7 @@ export var InitData =
     ],
     collections :
     [
-        new CollectionInfo('level 3', false)
+        new CollectionInfo('level 3', false),
+        new CollectionInfo('level 7', false)
     ]
 }

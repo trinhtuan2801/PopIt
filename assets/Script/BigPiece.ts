@@ -50,7 +50,7 @@ export class BigPiece extends Component {
     @property(Material)
     material: Material = null
 
-    match_height = 5
+    match_height = 4.5
 
     onLoad()
     {
@@ -111,6 +111,7 @@ export class BigPiece extends Component {
             }
             else
             {
+                console.log('yes')
                 node.getComponent(MeshCollider).enabled = true
             }
             node.getComponent(MeshCollider).mesh = meshrender.mesh

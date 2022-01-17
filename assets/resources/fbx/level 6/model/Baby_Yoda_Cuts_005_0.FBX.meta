@@ -1,0 +1,76 @@
+{
+  "ver": "2.1.4",
+  "importer": "fbx",
+  "imported": true,
+  "uuid": "9cfdb918-1f83-4359-90d9-de067f0a8755",
+  "files": [],
+  "subMetas": {
+    "27308": {
+      "importer": "gltf-scene",
+      "uuid": "9cfdb918-1f83-4359-90d9-de067f0a8755@27308",
+      "displayName": "",
+      "id": "27308",
+      "name": "Baby_Yoda_Cuts_005_0.prefab",
+      "userData": {
+        "gltfIndex": 0
+      },
+      "ver": "1.0.12",
+      "imported": true,
+      "files": [
+        ".json"
+      ],
+      "subMetas": {}
+    },
+    "57498": {
+      "importer": "gltf-mesh",
+      "uuid": "9cfdb918-1f83-4359-90d9-de067f0a8755@57498",
+      "displayName": "",
+      "id": "57498",
+      "name": "Baby_Yoda_Cuts_005_0.mesh",
+      "userData": {
+        "gltfIndex": 0
+      },
+      "ver": "1.1.0",
+      "imported": true,
+      "files": [
+        ".bin",
+        ".json"
+      ],
+      "subMetas": {}
+    },
+    "0023b": {
+      "importer": "gltf-material",
+      "uuid": "9cfdb918-1f83-4359-90d9-de067f0a8755@0023b",
+      "displayName": "",
+      "id": "0023b",
+      "name": "_Baby-Yoda_Cutsdefault.material",
+      "userData": {
+        "gltfIndex": 0
+      },
+      "ver": "1.0.14",
+      "imported": true,
+      "files": [
+        ".json"
+      ],
+      "subMetas": {}
+    }
+  },
+  "userData": {
+    "imageMetas": [],
+    "legacyFbxImporter": false,
+    "redirect": "9cfdb918-1f83-4359-90d9-de067f0a8755@27308",
+    "assetFinder": {
+      "meshes": [
+        "9cfdb918-1f83-4359-90d9-de067f0a8755@57498"
+      ],
+      "skeletons": [],
+      "textures": [],
+      "materials": [
+        "9cfdb918-1f83-4359-90d9-de067f0a8755@0023b"
+      ],
+      "scenes": [
+        "9cfdb918-1f83-4359-90d9-de067f0a8755@27308"
+      ]
+    }
+  }
+}

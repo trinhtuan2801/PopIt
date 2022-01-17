@@ -1,0 +1,76 @@
+{
+  "ver": "2.1.4",
+  "importer": "fbx",
+  "imported": true,
+  "uuid": "a721a177-69a0-4118-836f-cf4baf07bf15",
+  "files": [],
+  "subMetas": {
+    "c1ddd": {
+      "importer": "gltf-mesh",
+      "uuid": "a721a177-69a0-4118-836f-cf4baf07bf15@c1ddd",
+      "displayName": "",
+      "id": "c1ddd",
+      "name": "S_Solar_Cut_05_0.mesh",
+      "userData": {
+        "gltfIndex": 0
+      },
+      "ver": "1.1.0",
+      "imported": true,
+      "files": [
+        ".bin",
+        ".json"
+      ],
+      "subMetas": {}
+    },
+    "66bd3": {
+      "importer": "gltf-material",
+      "uuid": "a721a177-69a0-4118-836f-cf4baf07bf15@66bd3",
+      "displayName": "",
+      "id": "66bd3",
+      "name": "_S_Solar_Cut_05default.material",
+      "userData": {
+        "gltfIndex": 0
+      },
+      "ver": "1.0.14",
+      "imported": true,
+      "files": [
+        ".json"
+      ],
+      "subMetas": {}
+    },
+    "82ac3": {
+      "importer": "gltf-scene",
+      "uuid": "a721a177-69a0-4118-836f-cf4baf07bf15@82ac3",
+      "displayName": "",
+      "id": "82ac3",
+      "name": "S_Solar_Cut_05_0.prefab",
+      "userData": {
+        "gltfIndex": 0
+      },
+      "ver": "1.0.12",
+      "imported": true,
+      "files": [
+        ".json"
+      ],
+      "subMetas": {}
+    }
+  },
+  "userData": {
+    "imageMetas": [],
+    "legacyFbxImporter": false,
+    "redirect": "a721a177-69a0-4118-836f-cf4baf07bf15@82ac3",
+    "assetFinder": {
+      "meshes": [
+        "a721a177-69a0-4118-836f-cf4baf07bf15@c1ddd"
+      ],
+      "skeletons": [],
+      "textures": [],
+      "materials": [
+        "a721a177-69a0-4118-836f-cf4baf07bf15@66bd3"
+      ],
+      "scenes": [
+        "a721a177-69a0-4118-836f-cf4baf07bf15@82ac3"
+      ]
+    }
+  }
+}
