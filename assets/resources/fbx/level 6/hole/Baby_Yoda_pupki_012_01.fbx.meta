@@ -2,15 +2,15 @@
   "ver": "2.1.4",
   "importer": "fbx",
   "imported": true,
-  "uuid": "61b2954c-714f-4662-99f5-fe6daad67e0a",
+  "uuid": "6ceef3bd-9dbd-4ccb-ab07-f051b9c8981b",
   "files": [],
   "subMetas": {
-    "79856": {
+    "167e7": {
       "importer": "gltf-mesh",
-      "uuid": "61b2954c-714f-4662-99f5-fe6daad67e0a@79856",
+      "uuid": "6ceef3bd-9dbd-4ccb-ab07-f051b9c8981b@167e7",
       "displayName": "",
-      "id": "79856",
-      "name": "Baby_Yoda_pupki_011_0.mesh",
+      "id": "167e7",
+      "name": "Baby_Yoda_pupki_012_0.mesh",
       "userData": {
         "gltfIndex": 0
       },
@@ -24,7 +24,7 @@
     },
     "32d96": {
       "importer": "gltf-embeded-image",
-      "uuid": "61b2954c-714f-4662-99f5-fe6daad67e0a@32d96",
+      "uuid": "6ceef3bd-9dbd-4ccb-ab07-f051b9c8981b@32d96",
       "displayName": "",
       "id": "32d96",
       "name": "Map #0.image",
@@ -41,7 +41,7 @@
     },
     "ab932": {
       "importer": "texture",
-      "uuid": "61b2954c-714f-4662-99f5-fe6daad67e0a@ab932",
+      "uuid": "6ceef3bd-9dbd-4ccb-ab07-f051b9c8981b@ab932",
       "displayName": "",
       "id": "ab932",
       "name": "Map #0.texture",
@@ -53,7 +53,7 @@
         "mipfilter": "none",
         "anisotropy": 0,
         "isUuid": true,
-        "imageUuidOrDatabaseUri": "61b2954c-714f-4662-99f5-fe6daad67e0a@32d96"
+        "imageUuidOrDatabaseUri": "6ceef3bd-9dbd-4ccb-ab07-f051b9c8981b@32d96"
       },
       "ver": "1.0.21",
       "imported": true,
@@ -64,7 +64,7 @@
     },
     "5c895": {
       "importer": "gltf-material",
-      "uuid": "61b2954c-714f-4662-99f5-fe6daad67e0a@5c895",
+      "uuid": "6ceef3bd-9dbd-4ccb-ab07-f051b9c8981b@5c895",
       "displayName": "",
       "id": "5c895",
       "name": "Material #2.material",
@@ -78,12 +78,12 @@
       ],
       "subMetas": {}
     },
-    "7aeea": {
+    "23f2e": {
       "importer": "gltf-scene",
-      "uuid": "61b2954c-714f-4662-99f5-fe6daad67e0a@7aeea",
+      "uuid": "6ceef3bd-9dbd-4ccb-ab07-f051b9c8981b@23f2e",
       "displayName": "",
-      "id": "7aeea",
-      "name": "Baby_Yoda_pupki_011_0.prefab",
+      "id": "23f2e",
+      "name": "Baby_Yoda_pupki_012_01.prefab",
       "userData": {
         "gltfIndex": 0
       },
@@ -99,24 +99,24 @@
     "imageMetas": [
       {
         "name": "Map #0",
-        "uri": "61b2954c-714f-4662-99f5-fe6daad67e0a@32d96"
+        "uri": "6ceef3bd-9dbd-4ccb-ab07-f051b9c8981b@32d96"
       }
     ],
     "legacyFbxImporter": false,
-    "redirect": "61b2954c-714f-4662-99f5-fe6daad67e0a@7aeea",
+    "redirect": "6ceef3bd-9dbd-4ccb-ab07-f051b9c8981b@23f2e",
     "assetFinder": {
       "meshes": [
-        "61b2954c-714f-4662-99f5-fe6daad67e0a@79856"
+        "6ceef3bd-9dbd-4ccb-ab07-f051b9c8981b@167e7"
       ],
       "skeletons": [],
       "textures": [
-        "61b2954c-714f-4662-99f5-fe6daad67e0a@ab932"
+        "6ceef3bd-9dbd-4ccb-ab07-f051b9c8981b@ab932"
       ],
       "materials": [
-        "61b2954c-714f-4662-99f5-fe6daad67e0a@5c895"
+        "6ceef3bd-9dbd-4ccb-ab07-f051b9c8981b@5c895"
       ],
       "scenes": [
-        "61b2954c-714f-4662-99f5-fe6daad67e0a@7aeea"
+        "6ceef3bd-9dbd-4ccb-ab07-f051b9c8981b@23f2e"
       ]
     }
   }

@@ -270,7 +270,6 @@ export class GameController extends Component {
 
     onTouchMove(touch: Touch) {
         if (this.isHit && this.gamestate == GameState.MATCH_PIECE) {
-            this.objectHit.getComponent(Piece).rayCast()
             this.camera_3d.screenPointToRay(touch.getLocationX(), touch.getLocationY(), this.ray);
             if (PhysicsSystem.instance.raycast(this.ray)) {
                 const result = PhysicsSystem.instance.raycastResults;
@@ -288,6 +287,7 @@ export class GameController extends Component {
                     }
                 }
             }
+            this.objectHit.getComponent(Piece).rayCast()
         }
         else if (this.gamestate == GameState.POP_BUBBLE) {
             this.camera_3d.screenPointToRay(touch.getLocationX(), touch.getLocationY(), this.ray);

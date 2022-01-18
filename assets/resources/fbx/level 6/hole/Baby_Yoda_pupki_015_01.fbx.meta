@@ -78,12 +78,12 @@
       ],
       "subMetas": {}
     },
-    "ae60b": {
+    "a970e": {
       "importer": "gltf-scene",
-      "uuid": "b75c586a-4401-4803-8af2-f1080adf3ebf@ae60b",
+      "uuid": "b75c586a-4401-4803-8af2-f1080adf3ebf@a970e",
       "displayName": "",
-      "id": "ae60b",
-      "name": "Baby_Yoda_pupki_015_0.prefab",
+      "id": "a970e",
+      "name": "Baby_Yoda_pupki_015_01.prefab",
       "userData": {
         "gltfIndex": 0
       },
@@ -103,7 +103,7 @@
       }
     ],
     "legacyFbxImporter": false,
-    "redirect": "b75c586a-4401-4803-8af2-f1080adf3ebf@ae60b",
+    "redirect": "b75c586a-4401-4803-8af2-f1080adf3ebf@a970e",
     "assetFinder": {
       "meshes": [
         "b75c586a-4401-4803-8af2-f1080adf3ebf@6d6e0"
@@ -116,7 +116,7 @@
         "b75c586a-4401-4803-8af2-f1080adf3ebf@5c895"
       ],
       "scenes": [
-        "b75c586a-4401-4803-8af2-f1080adf3ebf@ae60b"
+        "b75c586a-4401-4803-8af2-f1080adf3ebf@a970e"
       ]
     }
   }
