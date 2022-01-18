@@ -171,10 +171,10 @@ export class GameController extends Component {
             if (this.gamestate == GameState.MATCH_PIECE) {
                 if (hitnode.layer == 1 << 0) // layer piece
                 {
-                    this.checkPiece(hitnode.parent, result.hitPoint)
+                    this.checkPiece(hitnode.parent, result.hitPoint, touch)
                 }
                 else if (hitnode.layer == 1 << 1) {
-                    this.checkPiece(hitnode.parent.parent, result.hitPoint)
+                    this.checkPiece(hitnode.parent.parent, result.hitPoint, touch)
                 }
             }
             else if (this.gamestate == GameState.POP_BUBBLE) {
@@ -186,13 +186,31 @@ export class GameController extends Component {
         }
     }
 
-    checkPiece(piecenode: Node, hitpoint: Vec3) {
+    checkPiece(piecenode: Node, hitpoint: Vec3, touch: Touch) {
         let piece = piecenode.getComponent(Piece)
         if (piece && piece.isPickable) {
             this.hit_diff = piecenode.getPosition().subtract(hitpoint)
             this.objectHit = piecenode
             this.isHit = true
-            piece.pick()
+            let ray: geometry.Ray = new geometry.Ray()
+            this.camera_3d.screenPointToRay(touch.getLocationX(), touch.getLocationY(), ray);
+            if (PhysicsSystem.instance.raycast(this.ray)) {
+                const result = PhysicsSystem.instance.raycastResults;
+
+                for (let i = 0; i < result.length; i++) {
+                    const item = result[i];
+
+                    if (item.collider.node.uuid == this.ground.uuid) {
+                        let pos = item.hitPoint
+                        pos.x = (pos.x + this.hit_diff.x) * 0.75
+                        pos.z = (pos.z + this.hit_diff.z) * 0.75
+                        pos.y = this.objectHit.position.y
+                        // this.objectHit.setPosition(pos)
+                        piece.pick(pos)
+                        break
+                    }
+                }
+            }
         }
     }
 
@@ -262,8 +280,8 @@ export class GameController extends Component {
 
                     if (item.collider.node.uuid == this.ground.uuid) {
                         let pos = item.hitPoint
-                        pos.x = pos.x + this.hit_diff.x
-                        pos.z = pos.z + this.hit_diff.z
+                        pos.x = (pos.x + this.hit_diff.x) * 0.75
+                        pos.z = (pos.z + this.hit_diff.z) * 0.75
                         pos.y = this.objectHit.position.y
                         this.objectHit.setPosition(pos)
                         break

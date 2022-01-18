@@ -118,19 +118,18 @@ export class Piece extends Component {
         }
     }
 
-    pick()
+    pick(pos: Vec3)
     {
-        let pos = this.node.getPosition()
         pos.y = this.target.node.position.y + this.bigpiece.match_height + 2
         let temppos = pos.clone()
         temppos.y = this.startpos.y + this.bigpiece.match_height + 2.5
         tween(this.node)
         .to(0.04, {position: temppos}, {easing: 'quadOut'})
         .start()
-        tween(this.node)
-        .to(0.15, {scale: new Vec3(0.95, 1, 1.05)}, {easing: 'quadOut'})
-        .to(0.15, {scale: new Vec3(1, 1, 1)}, {easing: 'quadIn'})
-        .start()
+        // tween(this.node)
+        // .to(0.15, {scale: new Vec3(0.95, 1, 1.05)}, {easing: 'quadOut'})
+        // .to(0.15, {scale: new Vec3(1, 1, 1)}, {easing: 'quadIn'})
+        // .start()
     }
 
     drop(isSmallStretch: boolean)
