@@ -7,6 +7,6 @@
   "uuid": "418db55e-909a-493c-86da-e8c7b6fde950",
   "version": "3.3.2",
   "scripts": {
-    "test-fb": "cd build/web-mobile && openssl genrsa 2048 > key.pem && openssl req -x509 -days 1000 -new -key key.pem -out cert.pem && http-server --ssl -c-1 -p 8080 -a localhost"
+    "test-fb": "cd build/web-mobile && openssl genrsa 2048 > key.pem && openssl req -x509 -days 1000 -new -key key.pem -out cert.pem && http-server --cors --ssl -c-1 -p 8080 -a localhost"
   }
 }

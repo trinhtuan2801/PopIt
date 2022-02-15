@@ -174,7 +174,8 @@ export class BigPiece extends Component {
         let this_pos = this.node.getWorldPosition()
         
         let force_vec = this_pos.subtract(bubble_pos).multiply3f(0.6, 0, 0.6)
-        let angle = this.isFrontBubble ? new Vec3(-force_vec.z, 0, force_vec.x) : new Vec3(force_vec.z, 0, -force_vec.x)
+        // let angle = this.isFrontBubble ? new Vec3(-force_vec.z, 0, force_vec.x) : new Vec3(-force_vec.z, 0, force_vec.x)
+        let angle = new Vec3(-force_vec.z, 0, force_vec.x)
         
         let oldangle = this.isFrontBubble ? new Vec3(0, 0, 0) : new Vec3(180, 0, 0)
         
@@ -188,10 +189,10 @@ export class BigPiece extends Component {
         this.setBubblePopable(this.frontBubbles, false)
         this.setBubblePopable(this.backBubbles, false)
 
-        let newpos = this.plate.getPosition()
+        // let newpos = this.plate.getPosition()
         // newpos.y = this.isFrontBubble ? this.platepos_y : this.platepos_y * 2
 
-        tween(this.plate).to(0.5, {position: newpos}).start()
+        // tween(this.plate).to(0.5, {position: newpos}).start()
 
         tween(this.plate).by(0.5, {eulerAngles: new Vec3(180, 0, 0)}, {easing: 'quadOut'})
         .call(()=>
@@ -210,7 +211,29 @@ export class BigPiece extends Component {
         arr.forEach(bubble => {bubble.isPopable = isPopable});
     }
 
-
+    checkTouched(hitnode: Node, isTouched: boolean)
+    {
+        if (hitnode == null) return
+        if (!isTouched)
+        {
+            for(let element of this.node.children)
+            {
+                let piece = element.getComponent(Piece)
+                if (piece) piece.checkTouched()
+            }
+        }
+        else
+        {
+            for(let element of this.node.children)
+            {
+                if (element != hitnode)
+                {
+                    let piece = element.getComponent(Piece)
+                    if (piece) piece.checkTouched()
+                }
+            }
+        }
+    }
 
 }
 

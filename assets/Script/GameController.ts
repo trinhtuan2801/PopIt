@@ -63,6 +63,8 @@ export class GameController extends Component {
 
     isBonusFromChoose = false
 
+    isTouched = false
+
     onLoad() {
         console.log(PhysicsSystem)
         this.coin = InitData.coin
@@ -74,7 +76,7 @@ export class GameController extends Component {
         // this.initBonusLevel('level 3')
 
         console.log(FBInstant.player.getID());
-        
+         
     }
 
     init() {
@@ -108,6 +110,7 @@ export class GameController extends Component {
             this.gamestate = GameState.MATCH_PIECE
             this.UIMainScreen.hideBonusBar()
             this.setLevel(this.level + 1, false)
+            this.schedule(this.checkTouched, 2)
         }
         this.setCoin()
     }
@@ -163,6 +166,11 @@ export class GameController extends Component {
         this.UIMainScreen.hideUI()
         this.camera_3d.screenPointToRay(touch.getLocationX(), touch.getLocationY(), this.ray);
         this.isHit = false
+        this.isTouched = true
+        this.unschedule(this.setTouchFalse)
+        this.scheduleOnce(this.setTouchFalse, 2)
+        this.unschedule(this.checkTouched)
+        this.scheduleOnce(this.checkTouched, 3)
 
         if (PhysicsSystem.instance.raycastClosest(this.ray)) {
             const result = PhysicsSystem.instance.raycastClosestResult
@@ -192,6 +200,7 @@ export class GameController extends Component {
             this.hit_diff = piecenode.getPosition().subtract(hitpoint)
             this.objectHit = piecenode
             this.isHit = true
+
             let ray: geometry.Ray = new geometry.Ray()
             this.camera_3d.screenPointToRay(touch.getLocationX(), touch.getLocationY(), ray);
             if (PhysicsSystem.instance.raycast(this.ray)) {
@@ -270,6 +279,12 @@ export class GameController extends Component {
 
     onTouchMove(touch: Touch) {
         if (this.isHit && this.gamestate == GameState.MATCH_PIECE) {
+            this.isTouched = true
+            this.unschedule(this.setTouchFalse)
+            this.scheduleOnce(this.setTouchFalse, 2)
+            this.unschedule(this.checkTouched)
+            this.scheduleOnce(this.checkTouched, 3)
+
             this.camera_3d.screenPointToRay(touch.getLocationX(), touch.getLocationY(), this.ray);
             if (PhysicsSystem.instance.raycast(this.ray)) {
                 const result = PhysicsSystem.instance.raycastResults;
@@ -306,12 +321,12 @@ export class GameController extends Component {
     onTouchEnd() {
         if (this.gamestate == GameState.MATCH_PIECE && this.isHit) {
             let piece = this.objectHit.getComponent(Piece)
-            if (piece.isMatch) {
+            if (piece.isMatch) 
+            {
                 piece.match()
                 this.piece_count++
                 if (this.piece_count == this.level_piece_count)
                     this.gamestate = GameState.POP_BUBBLE
-
             }
             if (this.piece_count == this.level_piece_count)
                 piece.drop(false)
@@ -320,6 +335,29 @@ export class GameController extends Component {
             this.objectHit = null
             this.isHit = false
             this.hit_diff = null
+
+            this.unschedule(this.setTouchFalse)
+            this.unschedule(this.checkTouched)
+        }
+    }
+
+    setTouchFalse()
+    {
+        this.isTouched = false
+    }
+
+    checkTouched()
+    {
+        if (this.gamestate == GameState.MATCH_PIECE)
+        {
+            console.log('is touched', this.isTouched)
+            this.level_big_piece.checkTouched(this.objectHit, this.isTouched)
+            if (!this.isTouched)
+            {
+                this.objectHit = null
+                this.isHit = false
+                this.hit_diff = null
+            }
         }
     }
 

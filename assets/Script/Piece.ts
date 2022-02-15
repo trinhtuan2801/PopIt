@@ -195,6 +195,16 @@ export class Piece extends Component {
         }
     }
 
+    checkTouched()
+    {
+        if (!this.isPickable) return
+        if (this.node.getPosition() != this.startpos)
+        {
+            tween(this.node).to(0.2, {position: this.startpos}).start()
+            this.target.setTransparent()
+        }
+    }
+
 }
 
 /**
