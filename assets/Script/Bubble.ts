@@ -1,5 +1,5 @@
 
-import { _decorator, Component, Node, find, tween, Vec3, MeshRenderer, UIOpacity } from 'cc';
+import { _decorator, Component, Node, find, tween, Vec3, MeshRenderer, UIOpacity, ParticleSystem, CurveRange } from 'cc';
 const { ccclass, property } = _decorator;
 
 @ccclass('Bubble')
@@ -9,23 +9,32 @@ export class Bubble extends Component {
     isPopable = true
     bubble: Node = null
 
+    @property(ParticleSystem)
+    particle: ParticleSystem = null
+
+    oldscale: Vec3 = null
+
     onLoad()
     {
         this.bubble = this.node.children[0]
+        this.oldscale = this.bubble.getScale().clone()
     }
 
     popIt()
     {
         this.isPop = true
-        tween(this.node).to(0.12, {scale: new Vec3(1, 0, 1)}, {easing: 'quadIn'})
+        let scale = this.oldscale.clone()
+        scale.y = 0
+        tween(this.bubble).to(0.12, {scale: scale}, {easing: 'quadIn'})
         .call(()=>{this.bubble.active = false}).start()
+        this.particle.play()
     }
 
     setNormalState()
     {
         this.isPop = false
         this.isPopable = true
-        this.node.scale = new Vec3(1, 1, 1)
+        this.bubble.setScale(this.oldscale)
         this.bubble.active = true
     }
     

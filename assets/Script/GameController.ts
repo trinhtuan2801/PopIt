@@ -1,8 +1,8 @@
 
-import { _decorator, Component, Node, Camera, geometry, systemEvent, PhysicsSystem, Touch, MeshRenderer, Material, Vec3, Prefab, Scene, director, ShadowStage, SceneAsset, ShadowFlow, Mask, instantiate, RaycastResult2D, PhysicsRayResult, TerrainLayer, Game, tween, SystemEvent, resources } from 'cc';
+import { _decorator, Component, Node, Camera, geometry, systemEvent, PhysicsSystem, Touch, MeshRenderer, Material, Vec3, Prefab, Scene, director, ShadowStage, SceneAsset, ShadowFlow, Mask, instantiate, RaycastResult2D, PhysicsRayResult, TerrainLayer, Game, tween, SystemEvent, resources, AudioClip, AudioSourceComponent, AudioSource } from 'cc';
 import { BigPiece } from './BigPiece';
 import { Bubble } from './Bubble';
-import { InitData } from './data';
+import { common, InitData } from './data';
 import { Piece } from './Piece';
 import { UIMainScreen } from './UIMainScreen';
 
@@ -18,6 +18,14 @@ enum GameMode {
     NORMAL,
     BONUS
 }
+
+enum SoundType {
+    MATCH_COMPLETE,
+    MATCH,
+    POP,
+    LEVEL_COMPLETE
+}
+
 @ccclass('GameController')
 export class GameController extends Component {
     @property(Camera)
@@ -65,6 +73,20 @@ export class GameController extends Component {
 
     isTouched = false
 
+    @property(AudioClip)
+    pop_sounds: AudioClip[] = []
+
+    audioSource: AudioSource = new AudioSource('pop')
+
+    @property(AudioClip)
+    match_complete_sound: AudioClip = null
+
+    @property(AudioClip)
+    level_complete_sound: AudioClip = null
+
+    @property(AudioClip)
+    match_sound: AudioClip = null
+
     onLoad() {
         console.log(PhysicsSystem)
         this.coin = InitData.coin
@@ -110,7 +132,6 @@ export class GameController extends Component {
             this.gamestate = GameState.MATCH_PIECE
             this.UIMainScreen.hideBonusBar()
             this.setLevel(this.level + 1, false)
-            this.schedule(this.checkTouched, 2)
         }
         this.setCoin()
     }
@@ -165,17 +186,12 @@ export class GameController extends Component {
         if (this.gamestate == GameState.STANDBY) return
         this.UIMainScreen.hideUI()
         this.camera_3d.screenPointToRay(touch.getLocationX(), touch.getLocationY(), this.ray);
-        this.isHit = false
-        this.isTouched = true
-        this.unschedule(this.setTouchFalse)
-        this.scheduleOnce(this.setTouchFalse, 2)
-        this.unschedule(this.checkTouched)
-        this.scheduleOnce(this.checkTouched, 3)
+        this.isHit = false        
 
         if (PhysicsSystem.instance.raycastClosest(this.ray)) {
             const result = PhysicsSystem.instance.raycastClosestResult
             let hitnode = result.collider.node
-            console.log(result)
+            // console.log(result)
             if (this.gamestate == GameState.MATCH_PIECE) {
                 if (hitnode.layer == 1 << 0) // layer piece
                 {
@@ -184,6 +200,16 @@ export class GameController extends Component {
                 else if (hitnode.layer == 1 << 1) {
                     this.checkPiece(hitnode.parent.parent, result.hitPoint, touch)
                 }
+
+                if (hitnode.layer == 1 << 0 || hitnode.layer == 1 << 1)
+                {
+                    this.isTouched = true
+                    this.unschedule(this.setTouchFalse)
+                    this.scheduleOnce(this.setTouchFalse, 2)
+                    this.unschedule(this.checkTouched)
+                    this.scheduleOnce(this.checkTouched, 3)
+                }
+                
             }
             else if (this.gamestate == GameState.POP_BUBBLE) {
                 if (hitnode.layer == 1 << 1) // layer bubble
@@ -227,6 +253,9 @@ export class GameController extends Component {
         let bubble = bubblenode.getComponent(Bubble)
 
         if (bubble && !bubble.isPop && bubble.isPopable) {
+           
+            this.playAudio(SoundType.POP)
+            
             bubble.popIt()
             this.bubble_count++
             this.coin++
@@ -264,6 +293,7 @@ export class GameController extends Component {
             this.UIMainScreen.showUI()
             this.UIMainScreen.openLevelComplete(this.bubble_count, picture)
         }, 1.2)
+        this.playAudio(SoundType.LEVEL_COMPLETE, 0.2)
     }
 
     winBonus() {
@@ -274,16 +304,13 @@ export class GameController extends Component {
             this.UIMainScreen.hideBonusBar()
             this.init()
         }, 1)
+    
+        this.playAudio(SoundType.LEVEL_COMPLETE, 0.2)
 
     }
 
     onTouchMove(touch: Touch) {
         if (this.isHit && this.gamestate == GameState.MATCH_PIECE) {
-            this.isTouched = true
-            this.unschedule(this.setTouchFalse)
-            this.scheduleOnce(this.setTouchFalse, 2)
-            this.unschedule(this.checkTouched)
-            this.scheduleOnce(this.checkTouched, 3)
 
             this.camera_3d.screenPointToRay(touch.getLocationX(), touch.getLocationY(), this.ray);
             if (PhysicsSystem.instance.raycast(this.ray)) {
@@ -303,6 +330,11 @@ export class GameController extends Component {
                 }
             }
             this.objectHit.getComponent(Piece).rayCast()
+            this.isTouched = true
+            this.unschedule(this.setTouchFalse)
+            this.scheduleOnce(this.setTouchFalse, 2)
+            this.unschedule(this.checkTouched)
+            this.scheduleOnce(this.checkTouched, 3)
         }
         else if (this.gamestate == GameState.POP_BUBBLE) {
             this.camera_3d.screenPointToRay(touch.getLocationX(), touch.getLocationY(), this.ray);
@@ -326,7 +358,15 @@ export class GameController extends Component {
                 piece.match()
                 this.piece_count++
                 if (this.piece_count == this.level_piece_count)
+                {
                     this.gamestate = GameState.POP_BUBBLE
+
+                    this.playAudio(SoundType.MATCH_COMPLETE, 0.1)
+                }
+                else
+                {
+                    this.playAudio(SoundType.MATCH, 0.1)
+                }
             }
             if (this.piece_count == this.level_piece_count)
                 piece.drop(false)
@@ -359,6 +399,29 @@ export class GameController extends Component {
                 this.hit_diff = null
             }
         }
+    }
+
+    playAudio(type: SoundType, delay = 0)
+    {
+        if (!common.isAudio) return
+        let clip: AudioClip = null
+        switch(type)
+        {
+            case SoundType.POP: clip = this.pop_sounds[Math.floor(Math.random()*this.pop_sounds.length)];break
+            case SoundType.MATCH: clip = this.match_sound;break
+            case SoundType.MATCH_COMPLETE: clip = this.match_complete_sound;break
+            case SoundType.LEVEL_COMPLETE: clip = this.level_complete_sound;break
+        }
+
+        if (delay > 0)
+        {
+            this.scheduleOnce(()=>
+            {
+                this.audioSource.playOneShot(clip, 1)
+            }, delay)
+        }
+        else
+            this.audioSource.playOneShot(clip, 1)
     }
 
 }

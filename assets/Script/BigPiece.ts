@@ -124,7 +124,6 @@ export class BigPiece extends Component {
         let pos = node.getPosition()
         pos.y -= this.match_height
         node.setPosition(pos)
-        console.log(node.position)
     }
 
     smallStretch()
