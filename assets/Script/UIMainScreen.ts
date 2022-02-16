@@ -1,5 +1,6 @@
 
 import { _decorator, Component, Node, Label, ProgressBar, tween, Sprite, Color, UIOpacity, Vec3, find, SpriteFrame } from 'cc';
+import { common } from './data';
 import { UIBonusPopUp } from './UIBonusPopUp';
 import { UILevelComplete } from './UILevelComplete';
 import { UIShop } from './UIShop';
@@ -58,20 +59,31 @@ export class UIMainScreen extends Component {
     @property(UITutorial)
     UITutorial: UITutorial = null
 
+    @property(Label)
+    coin_ingame_label: Label = null
+
     start()
     {
-        
+        this.coin_ingame_label.getComponent(UIOpacity).opacity = 0
     }
 
     hideUI()
     {
         tween(this.UI.getComponent(UIOpacity)).to(0.1, {opacity: 0}).call(()=>{this.UI.active = false}).start()
+
+        if (!this.bonus_bar.node.active)
+            this.coin_ingame_label.node.setPosition(0, 410)
+        else
+            this.coin_ingame_label.node.setPosition(0, 310)
+        tween(this.coin_ingame_label.getComponent(UIOpacity)).to(0.1, {opacity: 255}).start()
     }
 
     showUI()
     {
         this.UI.active = true
         tween(this.UI.getComponent(UIOpacity)).to(0.1, {opacity: 255}).start()
+
+        tween(this.coin_ingame_label.getComponent(UIOpacity)).to(0.1, {opacity: 0}).start()
     }
 
     setLevel(name: string | number, isRelax)
@@ -121,6 +133,7 @@ export class UIMainScreen extends Component {
     setCoinLabel(amount: number)
     {
         this.coin_label.string = amount.toString()
+        this.coin_ingame_label.string = amount.toString()
     }
 
     openShop()
@@ -170,7 +183,7 @@ export class UIMainScreen extends Component {
     {
         this.bonus_bar.node.active = true
         this.bonus_bar.node.scale = new Vec3(0,0,0)
-        tween(this.bonus_bar.node).to(0.2, {scale: new Vec3(0.9, 0.9, 0.9)}).start()
+        tween(this.bonus_bar.node).to(0.2, {scale: new Vec3(0.9, 0.9, 1)}).start()
     }
 
     hideBonusBar()
@@ -188,6 +201,7 @@ export class UIMainScreen extends Component {
         this.isSoundOn = !this.isSoundOn
         if (this.isSoundOn) this.sound_button.spriteFrame = this.sound_on_frame
         else this.sound_button.spriteFrame = this.sound_off_frame
+        common.isAudio = this.isSoundOn
     }
 
     openTutorial()

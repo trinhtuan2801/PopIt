@@ -58,6 +58,7 @@ export class UILevelComplete extends Component {
     showUI()
     {
         this.UI.active = true
+        this.UI.setScale(0, 0, 0)
         tween(this.UI).to(0.1, {scale: new Vec3(1, 1, 1)}).start()
         this.cloak.active = true
         tween(this.cloak.getComponent(UIOpacity)).to(0.1, {opacity: 255}).start()

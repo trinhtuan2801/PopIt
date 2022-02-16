@@ -45,3 +45,8 @@ export var InitData =
         new CollectionInfo('level 7', false)
     ]
 }
+
+export var common = 
+{
+    isAudio: true,
+}
