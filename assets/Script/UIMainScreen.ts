@@ -1,6 +1,6 @@
 
-import { _decorator, Component, Node, Label, ProgressBar, tween, Sprite, Color, UIOpacity, Vec3, find, SpriteFrame } from 'cc';
-import { common } from './data';
+import { _decorator, Component, Node, Label, ProgressBar, tween, Sprite, Color, UIOpacity, Vec3, find, SpriteFrame, AudioClip, AudioSource } from 'cc';
+import { common, setData } from './data';
 import { UIBonusPopUp } from './UIBonusPopUp';
 import { UILevelComplete } from './UILevelComplete';
 import { UIShop } from './UIShop';
@@ -61,6 +61,11 @@ export class UIMainScreen extends Component {
 
     @property(Label)
     coin_ingame_label: Label = null
+
+    @property(AudioClip)
+    coin_drop_sound: AudioClip = null
+
+    audioSource = new AudioSource('coin')
 
     start()
     {
@@ -136,15 +141,39 @@ export class UIMainScreen extends Component {
         this.coin_ingame_label.string = amount.toString()
     }
 
+    tweenCoinLabel(start: number, end: number)
+    {
+        let progress = {
+            value: start
+        }
+        let tween_jump = start
+        tween(progress).to(1.2, {value: end}, {onUpdate: (target: {value: number}, ratio: number) => {
+            let floor_value = Math.floor(target.value)
+            if (floor_value > tween_jump)
+            {
+                tween_jump = floor_value
+                this.setCoinLabel(Math.floor(target.value))
+                tween(this.coin_label.node).to(0.05, {scale: new Vec3(1.2, 1.2, 1.1)}).to(0.05, {scale: new Vec3(1, 1, 1)}).start()
+            }
+        }}).start()
+        this.audioSource.playOneShot(this.coin_drop_sound)
+    }
+
     openShop()
     {
         this.UIShop.showUI()
         this.closeSetting()
     }
 
-    openLevelComplete(score: number, picture: SpriteFrame)
+    // openLevelComplete(score: number, picture: SpriteFrame)
+    // {
+    //     this.UILevelComplete.init(score, picture)
+    //     this.UILevelComplete.showUI()
+    // }
+
+    openLevelComplete(score: number)
     {
-        this.UILevelComplete.init(score, picture)
+        this.UILevelComplete.init(score)
         this.UILevelComplete.showUI()
     }
 
@@ -166,6 +195,7 @@ export class UIMainScreen extends Component {
             .to(0.25, {scale: new Vec3(1, 1, 1)})
         )
         .start()
+        AudioSource.prototype.playOneShot(this.coin_drop_sound, 1)
     }
 
     showBonusPopUp(name: string)
@@ -198,7 +228,13 @@ export class UIMainScreen extends Component {
 
     onClickSoundButton()
     {
-        this.isSoundOn = !this.isSoundOn
+        this.setSoundButton(!this.isSoundOn)
+        setData()
+    }
+
+    setSoundButton(isOn: boolean)
+    {
+        this.isSoundOn = isOn
         if (this.isSoundOn) this.sound_button.spriteFrame = this.sound_on_frame
         else this.sound_button.spriteFrame = this.sound_off_frame
         common.isAudio = this.isSoundOn

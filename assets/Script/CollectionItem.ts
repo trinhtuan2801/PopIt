@@ -37,8 +37,7 @@ export class CollectionItem extends Component {
 
     start()
     {
-        this.watch_button.active = true
-        this.play_button.active = false
+
     }
 
     init(info: CollectionInfo, game: GameController, UIShop: UIShop)
