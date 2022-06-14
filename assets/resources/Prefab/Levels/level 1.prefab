@@ -10503,12 +10503,8 @@
     "BonusLevelName": "",
     "front_node": null,
     "back_node": null,
-    "LevelPicture": {
-      "__uuid__": "b7d10c3b-e8ad-49e0-b740-2547e682945e@f9941",
-      "__expectedType__": "cc.SpriteFrame"
-    },
     "material": {
-      "__uuid__": "ad7be350-cf07-4d4b-8e36-e918f1296a91",
+      "__uuid__": "0f15e6cd-a750-40fb-92f8-d5d1fa052f22",
       "__expectedType__": "cc.Material"
     },
     "_id": ""

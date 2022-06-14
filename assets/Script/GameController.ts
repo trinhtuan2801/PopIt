@@ -1,6 +1,5 @@
 
 import { _decorator, Component, Node, Camera, geometry, systemEvent, PhysicsSystem, Touch, MeshRenderer, Material, Vec3, Prefab, Scene, director, ShadowStage, SceneAsset, ShadowFlow, Mask, instantiate, RaycastResult2D, PhysicsRayResult, TerrainLayer, Game, tween, SystemEvent, resources, AudioClip, AudioSourceComponent, AudioSource, SpriteFrame, RenderTexture, Sprite, gfx, TextAsset } from 'cc';
-import { AdsManager } from './AdsManager';
 import { BigPiece } from './BigPiece';
 import { Bubble } from './Bubble';
 import { common, getData, InitData, setData } from './data';
@@ -92,24 +91,24 @@ export class GameController extends Component {
 
 
     onLoad() {
-        AdsManager.getInstance().preload()
         systemEvent.on(SystemEvent.EventType.TOUCH_START, this.onTouchStart, this);
         systemEvent.on(SystemEvent.EventType.TOUCH_MOVE, this.onTouchMove, this);
         systemEvent.on(SystemEvent.EventType.TOUCH_END, this.onTouchEnd, this);
         // this.initBonusLevel('level 3')
 
         // console.log(FBInstant.player.getID());
-        let getdata = getData()
-        getdata.then(result => {
-            console.log(result)
-            this.level = InitData.level
-            this.coin = InitData.coin
-            this.setCoin()
-            this.UIMainScreen.UIShop.customStart(this)
-            this.UIMainScreen.setSoundButton(common.isAudio)
-            this.init()
+        // let getdata = getData()
+        // getdata.then(result => {
+        //     console.log(result)
 
-        })
+
+        // })
+        this.level = InitData.level
+        this.coin = InitData.coin
+        this.setCoin()
+        this.UIMainScreen.UIShop.customStart(this)
+        this.UIMainScreen.setSoundButton(common.isAudio)
+        this.init()
     }
 
     init() {
@@ -268,7 +267,7 @@ export class GameController extends Component {
         let bubble = bubblenode.getComponent(Bubble)
 
         if (bubble && !bubble.isPop && bubble.isPopable) {
-            FBInstant.performHapticFeedbackAsync()
+            // FBInstant.performHapticFeedbackAsync()
             this.playAudio(SoundType.POP)
 
             bubble.popIt()
@@ -370,7 +369,7 @@ export class GameController extends Component {
         if (this.gamestate == GameState.MATCH_PIECE && this.isHit) {
             let piece = this.objectHit.getComponent(Piece)
             if (piece.isMatch) {
-                FBInstant.performHapticFeedbackAsync()
+                // FBInstant.performHapticFeedbackAsync()
                 piece.match()
                 this.piece_count++
                 if (this.piece_count == this.level_piece_count) {
@@ -467,28 +466,6 @@ export class GameController extends Component {
             this.camera_capture.targetTexture = null
             this.camera_capture.node.active = false
         }, 0);
-    }
-
-    shareImg: any
-    getShareImg(cb) {
-        if (this.shareImg) {
-            return cb(this.shareImg);
-        }
-
-        resources.load('base64', (err, file: TextAsset) => {
-            this.shareImg = file.text;
-            cb(this.shareImg);
-        });
-    }
-    shareGame() {
-        this.getShareImg((img) => {
-            FBInstant.inviteAsync({
-                image: img,
-                text: {
-                  default: "Let's Pop!",
-                },
-            });
-        });
     }
 
     isDoubleAllow = true

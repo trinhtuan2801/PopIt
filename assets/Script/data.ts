@@ -25,7 +25,7 @@ export class CollectionInfo {
 export var InitData =
 {
     level: 0,
-    coin: 0,
+    coin: 10000,
     theme_index: 0,
     themes:
         [
@@ -52,26 +52,26 @@ export var common =
 
 export function getData() {
     // return
-    return new Promise<String>((resolve, reject)=>{
-        FBInstant.player
-        .getDataAsync(['level', 'coin', 'theme_index', 'themes', 'collections', 'isAudio'])
-        .then((data: Object) => {
-            if (Object.keys(data).length === 0) {
-                console.log('hok co data')
-                setData()
-            }
-            else {
-                console.log('data ne:', data)
-                InitData.level = data['level']
-                InitData.coin = data['coin']
-                InitData.theme_index = data['theme_index']
-                InitData.themes = data['themes']
-                InitData.collections = data['collections']
-                common.isAudio = data['isAudio']
-            }
-            resolve('lay data xong rui')
-        })
-    })
+    // return new Promise<String>((resolve, reject)=>{
+    //     FBInstant.player
+    //     .getDataAsync(['level', 'coin', 'theme_index', 'themes', 'collections', 'isAudio'])
+    //     .then((data: Object) => {
+    //         if (Object.keys(data).length === 0) {
+    //             console.log('hok co data')
+    //             setData()
+    //         }
+    //         else {
+    //             console.log('data ne:', data)
+    //             InitData.level = data['level']
+    //             InitData.coin = data['coin']
+    //             InitData.theme_index = data['theme_index']
+    //             InitData.themes = data['themes']
+    //             InitData.collections = data['collections']
+    //             common.isAudio = data['isAudio']
+    //         }
+    //         resolve('lay data xong rui')
+    //     })
+    // })
     
 }
 
@@ -86,10 +86,10 @@ export function setData() {
         isAudio: common.isAudio
     }
     console.log(data)
-    FBInstant.player
-        .setDataAsync(data)
-        .then(function () {
-            console.log('data is set');
-            // console.log(InitData)
-        });
+    // FBInstant.player
+    //     .setDataAsync(data)
+    //     .then(function () {
+    //         console.log('data is set');
+    //         // console.log(InitData)
+    //     });
 }
