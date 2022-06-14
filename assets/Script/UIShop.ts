@@ -1,7 +1,7 @@
 
 import { _decorator, Component, Node, Prefab, instantiate, Color, Sprite, color, PageView, tween, Vec3, Vec2, find, MeshRenderer, SpriteFrame, Label, LabelShadow, UIOpacity } from 'cc';
 import { CollectionItem } from './CollectionItem';
-import { InitData } from './data';
+import { InitData, setData } from './data';
 import { GameController } from './GameController';
 import { ThemeItem } from './ThemeItem';
 const { ccclass, property } = _decorator;
@@ -85,11 +85,11 @@ export class UIShop extends Component {
 
     onLoad()
     {
-        this.game = find('GameController').getComponent(GameController)
     }
 
-    start()
+    customStart(game: GameController)
     {
+        this.game = game
         this.init()
         this.switchToThemeTab()
     }
@@ -105,6 +105,7 @@ export class UIShop extends Component {
 
     hideUI()
     {
+        setData()
         // tween(this.UI.getComponent(UIOpacity)).to(0.1,  {opacity: 0})
         // .call(()=>{this.UI.active = false}).start()
         this.UI.active = false

@@ -13973,10 +13973,6 @@
     "BonusLevelName": "",
     "front_node": null,
     "back_node": null,
-    "LevelPicture": {
-      "__uuid__": "b7d10c3b-e8ad-49e0-b740-2547e682945e@f9941",
-      "__expectedType__": "cc.SpriteFrame"
-    },
     "material": {
       "__uuid__": "eeebf974-5c13-45da-9286-b1d14ad113be",
       "__expectedType__": "cc.Material"

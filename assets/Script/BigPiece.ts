@@ -42,9 +42,6 @@ export class BigPiece extends Component {
 
     total_pop_count = 0
 
-    @property(SpriteFrame)
-    LevelPicture: SpriteFrame = null
-
     platepos_y = 0
 
     @property(Material)

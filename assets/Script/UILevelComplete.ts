@@ -1,5 +1,5 @@
 
-import { _decorator, Component, Node, Label, LabelComponent, tween, Vec3, UIOpacity, find, Button, Sprite, SpriteFrame } from 'cc';
+import { _decorator, Component, Node, Label, LabelComponent, tween, Vec3, UIOpacity, find, Button, Sprite, SpriteFrame, Tween } from 'cc';
 import { GameController } from './GameController';
 const { ccclass, property } = _decorator;
 
@@ -14,7 +14,7 @@ const { ccclass, property } = _decorator;
  * ManualUrl = https://docs.cocos.com/creator/3.3/manual/en/
  *
  */
- 
+
 @ccclass('UILevelComplete')
 export class UILevelComplete extends Component {
 
@@ -23,7 +23,7 @@ export class UILevelComplete extends Component {
 
     @property(Sprite)
     LevelPicture: Sprite = null
-    
+
     @property(Node)
     nothanks: Node = null
 
@@ -35,59 +35,67 @@ export class UILevelComplete extends Component {
     @property(Node)
     cloak: Node = null
 
-    onLoad()
-    {
+    @property(Node)
+    double_button: Node = null
+
+    onLoad() {
         this.game = find('GameController').getComponent(GameController)
     }
 
-    init(score: number, picture: SpriteFrame)
-    {
-        this.score_label.string = score.toString()
-        this.LevelPicture.spriteFrame = picture
+    start() {
+        // let oldscale = new Vec3(0.7, 0.7, 0.7)
+        // let newscale = new Vec3(0.73, 0.73, 0.73)
+        // tween(this.double_button).repeatForever(
+        //     tween()
+        //         .to(0.2, { scale: newscale })
+        //         .to(0.1, { scale: oldscale })
+        //         .to(0.2, { scale: newscale })
+        //         .to(0.1, { scale: oldscale })
+        //         .delay(1)
+        // ).start()
     }
 
-    onClickNoThanks()
-    {
-        this.scheduleOnce(()=>{
+    init(score: number) {
+        this.score_label.string = score.toString()
+        // this.LevelPicture.spriteFrame = picture
+    }
+
+    onClickNoThanks() {
+        this.scheduleOnce(() => {
             this.game.init()
         }, 1)
 
         this.hideUI()
     }
 
-    showUI()
-    {
+    showUI() {
         this.UI.active = true
         this.UI.setScale(0, 0, 0)
-        tween(this.UI).to(0.1, {scale: new Vec3(1, 1, 1)}).start()
+        tween(this.UI).to(0.1, { scale: new Vec3(1, 1, 1) }).start()
         this.cloak.active = true
-        tween(this.cloak.getComponent(UIOpacity)).to(0.1, {opacity: 255}).start()
+        tween(this.cloak.getComponent(UIOpacity)).to(0.1, { opacity: 255 }).start()
         this.nothanks.active = true
         this.nothanks.getComponent(Button).interactable = false
         this.nothanks.getComponent(UIOpacity).opacity = 0
-        this.scheduleOnce(()=>{
-            tween(this.nothanks.getComponent(UIOpacity)).to(0.2, {opacity: 255}).call(()=>
-            {
+        this.scheduleOnce(() => {
+            tween(this.nothanks.getComponent(UIOpacity)).to(0.2, { opacity: 255 }).call(() => {
                 this.nothanks.getComponent(Button).interactable = true
             }).start()
         }, 2)
     }
 
-    hideUI()
-    {
-        tween(this.UI).to(0.1, {scale: new Vec3(0, 0, 0)})
-        .call(()=>
-        {
-            this.nothanks.getComponent(UIOpacity).opacity = 0
-            this.nothanks.active = false
-            this.UI.active = false
-        }).start()
+    hideUI() {
+        tween(this.UI).to(0.1, { scale: new Vec3(0, 0, 0) })
+            .call(() => {
+                this.nothanks.getComponent(UIOpacity).opacity = 0
+                this.nothanks.active = false
+                this.UI.active = false
+            }).start()
 
-        tween(this.cloak.getComponent(UIOpacity)).to(0.1, {opacity: 0})
-        .call(()=>
-        {
-            this.cloak.active = false
-        }).start()
+        tween(this.cloak.getComponent(UIOpacity)).to(0.1, { opacity: 0 })
+            .call(() => {
+                this.cloak.active = false
+            }).start()
     }
 }
 

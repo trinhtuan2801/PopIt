@@ -1,8 +1,9 @@
 
-import { _decorator, Component, Node, Camera, geometry, systemEvent, PhysicsSystem, Touch, MeshRenderer, Material, Vec3, Prefab, Scene, director, ShadowStage, SceneAsset, ShadowFlow, Mask, instantiate, RaycastResult2D, PhysicsRayResult, TerrainLayer, Game, tween, SystemEvent, resources, AudioClip, AudioSourceComponent, AudioSource } from 'cc';
+import { _decorator, Component, Node, Camera, geometry, systemEvent, PhysicsSystem, Touch, MeshRenderer, Material, Vec3, Prefab, Scene, director, ShadowStage, SceneAsset, ShadowFlow, Mask, instantiate, RaycastResult2D, PhysicsRayResult, TerrainLayer, Game, tween, SystemEvent, resources, AudioClip, AudioSourceComponent, AudioSource, SpriteFrame, RenderTexture, Sprite, gfx, TextAsset } from 'cc';
+import { AdsManager } from './AdsManager';
 import { BigPiece } from './BigPiece';
 import { Bubble } from './Bubble';
-import { common, InitData } from './data';
+import { common, getData, InitData, setData } from './data';
 import { Piece } from './Piece';
 import { UIMainScreen } from './UIMainScreen';
 
@@ -87,25 +88,38 @@ export class GameController extends Component {
     @property(AudioClip)
     match_sound: AudioClip = null
 
+
+
+
     onLoad() {
-        console.log(PhysicsSystem)
-        this.coin = InitData.coin
-        this.setCoin()
+        AdsManager.getInstance().preload()
         systemEvent.on(SystemEvent.EventType.TOUCH_START, this.onTouchStart, this);
         systemEvent.on(SystemEvent.EventType.TOUCH_MOVE, this.onTouchMove, this);
         systemEvent.on(SystemEvent.EventType.TOUCH_END, this.onTouchEnd, this);
-        this.init()
         // this.initBonusLevel('level 3')
 
-        console.log(FBInstant.player.getID());
-         
+        // console.log(FBInstant.player.getID());
+        let getdata = getData()
+        getdata.then(result => {
+            console.log(result)
+            this.level = InitData.level
+            this.coin = InitData.coin
+            this.setCoin()
+            this.UIMainScreen.UIShop.customStart(this)
+            this.UIMainScreen.setSoundButton(common.isAudio)
+            this.init()
+
+        })
     }
 
     init() {
+        InitData.level = this.level
+        setData()
         if (this.level_big_piece && this.level_big_piece.isValid) {
             this.level_big_piece.destroy()
             this.level_big_piece = null
         }
+
         this.isBonusFromChoose = false
         this.isHit = false
         this.objectHit = null
@@ -114,7 +128,6 @@ export class GameController extends Component {
         this.bubble_count = 0
         this.level_big_piece = instantiate(this.level_prefabs[this.level % this.level_prefabs.length]).getComponent(BigPiece)
         this.piece_node.addChild(this.level_big_piece.node)
-        console.log('big', this.level_big_piece.node.position.y)
         this.level_bubble_count = this.level_big_piece.bubble_amount
         this.level_piece_count = this.level_big_piece.piece_amount
         this.UIMainScreen.showLevelLabel()
@@ -134,6 +147,7 @@ export class GameController extends Component {
             this.setLevel(this.level + 1, false)
         }
         this.setCoin()
+        this.isDoubleAllow = true
     }
 
     initBonusLevel(name: string) {
@@ -146,7 +160,7 @@ export class GameController extends Component {
         let path = `Prefab/Levels/${name}`
         this.scheduleOnce(() => {
             resources.load(path, Prefab, (err, prefab) => {
-                console.log(prefab)
+                // console.log(prefab)
                 this.isHit = false
                 this.objectHit = null
                 this.level_big_piece = null
@@ -164,17 +178,19 @@ export class GameController extends Component {
                     this.UIMainScreen.showBonusBar()
                     this.UIMainScreen.setBonusProgress(0)
                     this.setLevel(this.level_big_piece.BonusLevelName, true)
+
                 }
                 this.setCoin()
             })
         }, 1.1)
-
+        this.isDoubleAllow = true
     }
 
-    setCoin(amount: number = this.coin) {
+    setCoin(amount: number = this.coin, isSetLabel = true) {
         this.coin = amount
         InitData.coin = this.coin
-        this.UIMainScreen.setCoinLabel(this.coin)
+        if (isSetLabel)
+            this.UIMainScreen.setCoinLabel(this.coin)
     }
 
     setLevel(name: string | number, isRelax: boolean) {
@@ -186,7 +202,7 @@ export class GameController extends Component {
         if (this.gamestate == GameState.STANDBY) return
         this.UIMainScreen.hideUI()
         this.camera_3d.screenPointToRay(touch.getLocationX(), touch.getLocationY(), this.ray);
-        this.isHit = false        
+        this.isHit = false
 
         if (PhysicsSystem.instance.raycastClosest(this.ray)) {
             const result = PhysicsSystem.instance.raycastClosestResult
@@ -201,15 +217,14 @@ export class GameController extends Component {
                     this.checkPiece(hitnode.parent.parent, result.hitPoint, touch)
                 }
 
-                if (hitnode.layer == 1 << 0 || hitnode.layer == 1 << 1)
-                {
+                if (hitnode.layer == 1 << 0 || hitnode.layer == 1 << 1) {
                     this.isTouched = true
                     this.unschedule(this.setTouchFalse)
                     this.scheduleOnce(this.setTouchFalse, 2)
                     this.unschedule(this.checkTouched)
                     this.scheduleOnce(this.checkTouched, 3)
                 }
-                
+
             }
             else if (this.gamestate == GameState.POP_BUBBLE) {
                 if (hitnode.layer == 1 << 1) // layer bubble
@@ -253,9 +268,9 @@ export class GameController extends Component {
         let bubble = bubblenode.getComponent(Bubble)
 
         if (bubble && !bubble.isPop && bubble.isPopable) {
-           
+            FBInstant.performHapticFeedbackAsync()
             this.playAudio(SoundType.POP)
-            
+
             bubble.popIt()
             this.bubble_count++
             this.coin++
@@ -287,11 +302,12 @@ export class GameController extends Component {
 
     winNormal() {
         this.level++
-        let picture = this.level_big_piece.LevelPicture.clone()
+        // let picture = this.level_big_piece.LevelPicture.clone()
+        // let picture = this.level_picture.spriteFrame.clone()
         this.level_big_piece.boom()
         this.scheduleOnce(() => {
             this.UIMainScreen.showUI()
-            this.UIMainScreen.openLevelComplete(this.bubble_count, picture)
+            this.UIMainScreen.openLevelComplete(this.bubble_count)
         }, 1.2)
         this.playAudio(SoundType.LEVEL_COMPLETE, 0.2)
     }
@@ -304,7 +320,7 @@ export class GameController extends Component {
             this.UIMainScreen.hideBonusBar()
             this.init()
         }, 1)
-    
+
         this.playAudio(SoundType.LEVEL_COMPLETE, 0.2)
 
     }
@@ -353,18 +369,17 @@ export class GameController extends Component {
     onTouchEnd() {
         if (this.gamestate == GameState.MATCH_PIECE && this.isHit) {
             let piece = this.objectHit.getComponent(Piece)
-            if (piece.isMatch) 
-            {
+            if (piece.isMatch) {
+                FBInstant.performHapticFeedbackAsync()
                 piece.match()
                 this.piece_count++
-                if (this.piece_count == this.level_piece_count)
-                {
+                if (this.piece_count == this.level_piece_count) {
                     this.gamestate = GameState.POP_BUBBLE
 
                     this.playAudio(SoundType.MATCH_COMPLETE, 0.1)
+                    this.scheduleOnce(this.takeLevelPicture, 0.2)
                 }
-                else
-                {
+                else {
                     this.playAudio(SoundType.MATCH, 0.1)
                 }
             }
@@ -381,19 +396,15 @@ export class GameController extends Component {
         }
     }
 
-    setTouchFalse()
-    {
+    setTouchFalse() {
         this.isTouched = false
     }
 
-    checkTouched()
-    {
-        if (this.gamestate == GameState.MATCH_PIECE)
-        {
+    checkTouched() {
+        if (this.gamestate == GameState.MATCH_PIECE) {
             console.log('is touched', this.isTouched)
             this.level_big_piece.checkTouched(this.objectHit, this.isTouched)
-            if (!this.isTouched)
-            {
+            if (!this.isTouched) {
                 this.objectHit = null
                 this.isHit = false
                 this.hit_diff = null
@@ -401,27 +412,91 @@ export class GameController extends Component {
         }
     }
 
-    playAudio(type: SoundType, delay = 0)
-    {
+    playAudio(type: SoundType, delay = 0) {
         if (!common.isAudio) return
         let clip: AudioClip = null
-        switch(type)
-        {
-            case SoundType.POP: clip = this.pop_sounds[Math.floor(Math.random()*this.pop_sounds.length)];break
-            case SoundType.MATCH: clip = this.match_sound;break
-            case SoundType.MATCH_COMPLETE: clip = this.match_complete_sound;break
-            case SoundType.LEVEL_COMPLETE: clip = this.level_complete_sound;break
+        switch (type) {
+            case SoundType.POP: clip = this.pop_sounds[Math.floor(Math.random() * this.pop_sounds.length)]; break
+            case SoundType.MATCH: clip = this.match_sound; break
+            case SoundType.MATCH_COMPLETE: clip = this.match_complete_sound; break
+            case SoundType.LEVEL_COMPLETE: clip = this.level_complete_sound; break
         }
 
-        if (delay > 0)
-        {
-            this.scheduleOnce(()=>
-            {
+        if (delay > 0) {
+            this.scheduleOnce(() => {
                 this.audioSource.playOneShot(clip, 1)
             }, delay)
         }
         else
             this.audioSource.playOneShot(clip, 1)
+    }
+
+    @property(Sprite)
+    level_picture: Sprite = null
+
+    @property(Camera)
+    camera_capture: Camera = null
+
+    _renderTex: RenderTexture = null
+
+    takeLevelPicture() {
+        const spriteFrame = this.level_picture.spriteFrame;
+        const sp = new SpriteFrame();
+        sp.reset({
+            originalSize: spriteFrame.originalSize,
+            rect: spriteFrame.rect,
+            offset: spriteFrame.offset,
+            isRotate: spriteFrame.rotated,
+            borderTop: spriteFrame.insetTop,
+            borderLeft: spriteFrame.insetLeft,
+            borderBottom: spriteFrame.insetBottom,
+            borderRight: spriteFrame.insetRight,
+        });
+
+        const renderTex = this._renderTex = new RenderTexture();
+        renderTex.reset({
+            width: 810,
+            height: 882,
+        });
+        this.camera_capture.node.active = true
+        this.camera_capture.targetTexture = renderTex;
+        sp.texture = renderTex;
+        this.level_picture.spriteFrame = sp;
+        this.level_picture.updateMaterial();
+        this.scheduleOnce(() => {
+            this.camera_capture.targetTexture = null
+            this.camera_capture.node.active = false
+        }, 0);
+    }
+
+    shareImg: any
+    getShareImg(cb) {
+        if (this.shareImg) {
+            return cb(this.shareImg);
+        }
+
+        resources.load('base64', (err, file: TextAsset) => {
+            this.shareImg = file.text;
+            cb(this.shareImg);
+        });
+    }
+    shareGame() {
+        this.getShareImg((img) => {
+            FBInstant.inviteAsync({
+                image: img,
+                text: {
+                  default: "Let's Pop!",
+                },
+            });
+        });
+    }
+
+    isDoubleAllow = true
+    doubleMoney() {
+        if (!this.isDoubleAllow) return
+        this.isDoubleAllow = false
+        this.UIMainScreen.tweenCoinLabel(this.coin, this.coin + this.bubble_count)
+        this.setCoin(this.coin + this.bubble_count, false)
     }
 
 }
