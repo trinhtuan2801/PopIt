@@ -74,21 +74,20 @@ export class UILevelComplete extends Component {
         tween(this.UI).to(0.1, { scale: new Vec3(1, 1, 1) }).start()
         this.cloak.active = true
         tween(this.cloak.getComponent(UIOpacity)).to(0.1, { opacity: 255 }).start()
-        this.nothanks.active = true
-        this.nothanks.getComponent(Button).interactable = false
-        this.nothanks.getComponent(UIOpacity).opacity = 0
-        this.scheduleOnce(() => {
-            tween(this.nothanks.getComponent(UIOpacity)).to(0.2, { opacity: 255 }).call(() => {
-                this.nothanks.getComponent(Button).interactable = true
-            }).start()
-        }, 2)
+        // this.nothanks.active = true
+        // this.nothanks.getComponent(UIOpacity).opacity = 1
+        // this.nothanks.getComponent(Button).interactable = false
+        // this.nothanks.getComponent(UIOpacity).opacity = 0
+        // this.scheduleOnce(() => {
+        //     tween(this.nothanks.getComponent(UIOpacity)).to(0.2, { opacity: 255 }).call(() => {
+        //         this.nothanks.getComponent(Button).interactable = true
+        //     }).start()
+        // }, 2)
     }
 
     hideUI() {
         tween(this.UI).to(0.1, { scale: new Vec3(0, 0, 0) })
             .call(() => {
-                this.nothanks.getComponent(UIOpacity).opacity = 0
-                this.nothanks.active = false
                 this.UI.active = false
             }).start()
 
