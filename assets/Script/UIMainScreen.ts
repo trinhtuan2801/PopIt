@@ -238,6 +238,7 @@ export class UIMainScreen extends Component {
         if (this.isSoundOn) this.sound_button.spriteFrame = this.sound_on_frame
         else this.sound_button.spriteFrame = this.sound_off_frame
         common.isAudio = this.isSoundOn
+        setData()
     }
 
     openTutorial()
