@@ -25,7 +25,7 @@ export class CollectionInfo {
 export var InitData =
 {
     level: 0,
-    coin: 10000,
+    coin: 0,
     theme_index: 0,
     themes:
         [
@@ -51,45 +51,28 @@ export var common =
 }
 
 export function getData() {
-    // return
-    // return new Promise<String>((resolve, reject)=>{
-    //     FBInstant.player
-    //     .getDataAsync(['level', 'coin', 'theme_index', 'themes', 'collections', 'isAudio'])
-    //     .then((data: Object) => {
-    //         if (Object.keys(data).length === 0) {
-    //             console.log('hok co data')
-    //             setData()
-    //         }
-    //         else {
-    //             console.log('data ne:', data)
-    //             InitData.level = data['level']
-    //             InitData.coin = data['coin']
-    //             InitData.theme_index = data['theme_index']
-    //             InitData.themes = data['themes']
-    //             InitData.collections = data['collections']
-    //             common.isAudio = data['isAudio']
-    //         }
-    //         resolve('lay data xong rui')
-    //     })
-    // })
-    
+    console.log(
+        JSON.parse(localStorage.getItem('level')),
+        JSON.parse(localStorage.getItem('coin')),
+        JSON.parse(localStorage.getItem('theme_index')),
+        JSON.parse(localStorage.getItem('themes')),
+        JSON.parse(localStorage.getItem('collections')),
+        JSON.parse(localStorage.getItem('isAudio')),
+    )
+    InitData.level = JSON.parse(localStorage.getItem('level')) || InitData.level
+    InitData.coin = JSON.parse(localStorage.getItem('coin')) || InitData.coin
+    InitData.theme_index = JSON.parse(localStorage.getItem('theme_index')) || InitData.theme_index
+    InitData.themes = JSON.parse(localStorage.getItem('themes')) || InitData.themes
+    InitData.collections = JSON.parse(localStorage.getItem('collections')) || InitData.collections
+    let isAudio = JSON.parse(localStorage.getItem('isAudio'))
+    common.isAudio = isAudio !== null ? isAudio : true
 }
 
 export function setData() {
-    // return 
-    let data: Object = {
-        level: InitData.level,
-        coin: InitData.coin,
-        theme_index: InitData.theme_index,
-        themes: InitData.themes,
-        collections: InitData.collections,
-        isAudio: common.isAudio
-    }
-    console.log(data)
-    // FBInstant.player
-    //     .setDataAsync(data)
-    //     .then(function () {
-    //         console.log('data is set');
-    //         // console.log(InitData)
-    //     });
+    localStorage.setItem('level', JSON.stringify(InitData.level))
+    localStorage.setItem('coin', JSON.stringify(InitData.coin))
+    localStorage.setItem('theme_index', JSON.stringify(InitData.theme_index))
+    localStorage.setItem('themes', JSON.stringify(InitData.themes))
+    localStorage.setItem('collections', JSON.stringify(InitData.collections))
+    localStorage.setItem('isAudio', JSON.stringify(common.isAudio))
 }

@@ -100,9 +100,8 @@ export class GameController extends Component {
         // let getdata = getData()
         // getdata.then(result => {
         //     console.log(result)
-
-
         // })
+        getData()
         this.level = InitData.level
         this.coin = InitData.coin
         this.setCoin()
