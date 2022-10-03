@@ -8,202 +8,192 @@ const { ccclass, property } = _decorator;
 @ccclass('Piece')
 export class Piece extends Component {
 
-    @property
-    isPickable = true
+  @property
+  isPickable = true
 
-    isMatch = false
+  isMatch = false
 
-    startpos: Vec3 = null
+  startpos: Vec3 = null
 
-    @property(PieceTarget)
-    target: PieceTarget = null
+  @property(PieceTarget)
+  target: PieceTarget = null
 
-    ray: geometry.Ray = new geometry.Ray()
+  ray: geometry.Ray = new geometry.Ray()
 
-    @property(Prefab)
-    bubble_prefab: Prefab = null
+  @property(Prefab)
+  bubble_prefab: Prefab = null
 
-    material: Material = null
+  material: Material = null
 
-    bigpiece: BigPiece = null
+  bigpiece: BigPiece = null
 
-    onLoad()
-    {
-        this.init()
+  timer: Date = null
 
-    }
+  current_rotation: Vec3 = new Vec3(0, 0, 0)
 
-    appear()
-    {
-        let pos = this.node.getPosition()
-        pos.y -= 7
-        this.node.setPosition(pos)
-        let randtime = Math.random()*0.5
-        this.scheduleOnce(()=>
-        {
-            tween(this.node)
-            .by(0.15, {position: new Vec3(0, 8, 0)})
-            .by(0.15, {position: new Vec3(0, -1, 0)})
-            .start()
-        }, randtime)
-    }
+  // isCancerRotate = false
 
-    init()
-    {
-        this.startpos = this.node.getPosition()
-        this.bigpiece = this.node.parent.getComponent(BigPiece)
-        if (this.node.parent.name == 'Plate') this.bigpiece = this.node.parent.parent.getComponent(BigPiece)
-        this.material = this.bigpiece.material
-        this.node.children[0].getComponent(MeshRenderer).setMaterial(this.material, 0)
-        if (this.bigpiece.isBonusLevel)
-        {
-            this.bigpiece.addToPlate(this.node)
-        }
-        else
-        {
-            this.appear()
-        }
-        this.addMeshCollider(this.node.children[0]) 
-        this.node.children.forEach(child => {
-            this.addShadow(child)
-        });
-        this.node.children.forEach(child =>
-        {
-            if (child.name.includes('Hole'))
-            {
-                this.addBubble(child)
-                this.addMeshCollider(child)
-            }
-        })
-    }
+  onLoad() {
+    this.init()
+  }
 
-    addBubble(hole: Node)
-    {
-        let bb = instantiate(this.bubble_prefab)
-        this.node.addChild(bb)
-        bb.setPosition(hole.getPosition())
-        let angle = hole.getComponent(CustomAngle).angle
-        if (angle) bb.setRotationFromEuler(angle)
-        hole.getComponent(MeshRenderer).setMaterial(this.material, 0)
-        bb.children[0].getComponent(MeshRenderer).setMaterial(this.material, 0)
-        let mesh = hole.getComponent(MeshRenderer).mesh
-        bb.children[0].getComponent(MeshRenderer).mesh = mesh
-        this.addMeshCollider(bb.children[0])
-    }
-
-    addMeshCollider(node: Node)
-    {
-        let meshrender = node.getComponent(MeshRenderer)
-        if (meshrender)
-        {
-            if (!node.getComponent(MeshCollider))
-            {
-                node.addComponent(MeshCollider)
-            }
-            else
-            {
-                node.getComponent(MeshCollider).enabled = true
-            }
-            node.getComponent(MeshCollider).mesh = meshrender.mesh
-        }
-    }
-
-    addShadow(node: Node)
-    {
-        let meshrender = node.getComponent(MeshRenderer)
-        if (meshrender)
-        {
-            meshrender.shadowCastingMode = MeshRenderer.ShadowCastingMode.ON
-            meshrender.receiveShadow = MeshRenderer.ShadowReceivingMode.ON
-        }
-    }
-
-    pick(pos: Vec3)
-    {
-        pos.y = this.target.node.position.y + this.bigpiece.match_height + 2
-        let temppos = pos.clone()
-        temppos.y = this.startpos.y + this.bigpiece.match_height + 2.5
-        tween(this.node)
-        .to(0.04, {position: temppos}, {easing: 'quadOut'})
+  appear() {
+    let pos = this.node.getPosition()
+    pos.y -= 7
+    this.node.setPosition(pos)
+    let randtime = Math.random() * 0.5
+    this.scheduleOnce(() => {
+      tween(this.node)
+        .by(0.15, { position: new Vec3(0, 8, 0) })
+        .by(0.15, { position: new Vec3(0, -1, 0) })
         .start()
-        // tween(this.node)
-        // .to(0.15, {scale: new Vec3(0.95, 1, 1.05)}, {easing: 'quadOut'})
-        // .to(0.15, {scale: new Vec3(1, 1, 1)}, {easing: 'quadIn'})
-        // .start()
-    }
+    }, randtime)
+  }
 
-    drop(isSmallStretch: boolean)
-    {
-        tween(this.node).to(0.2, {position: this.startpos}, {easing: 'quadOut'})
-        .call(()=>
-        {
-            if (!this.isPickable)
-            {
-                let bigpiece = this.node.parent.getComponent(BigPiece)
-                bigpiece.addToPlate(this.node)
-                if (isSmallStretch)
-                    bigpiece.smallStretch()
-                else
-                {
-                    bigpiece.bigStretch()
-                    bigpiece.removeAllPieceTargets()
-                }
-            }
-            else
-            {
-                tween(this.node)
-                .to(0.15, {scale: new Vec3(0.97, 1, 1.03)}, {easing: 'quadOut'})
-                .to(0.15, {scale: new Vec3(1, 1, 1)}, {easing: 'quadIn'})
-                .start()
-            } 
-        }).start()
+  init() {
+    this.startpos = this.node.getPosition()
+    this.bigpiece = this.node.parent.getComponent(BigPiece)
+    if (this.node.parent.name == 'Plate') this.bigpiece = this.node.parent.parent.getComponent(BigPiece)
+    this.material = this.bigpiece.material
+    this.node.children[0].getComponent(MeshRenderer).setMaterial(this.material, 0)
+    if (this.bigpiece.isBonusLevel) {
+      this.bigpiece.addToPlate(this.node)
     }
-
-    match()
-    {
-        this.isPickable = false
-        let pos = this.target.node.getPosition()
-        this.startpos = pos
-        this.startpos.y += this.bigpiece.match_height
+    else {
+      this.appear()
     }
+    this.addMeshCollider(this.node.children[0])
+    this.node.children.forEach(child => {
+      this.addShadow(child)
+    });
+    this.node.children.forEach(child => {
+      if (child.name.includes('Hole')) {
+        this.addBubble(child)
+        this.addMeshCollider(child)
+      }
+    })
+    let rot_y = Math.floor(Math.random()*4) * -90
+    this.current_rotation.y = rot_y
+    this.node.setRotationFromEuler(this.current_rotation)
+  }
 
-    rayCast()
-    {
-        let pos = this.node.getPosition()
-        this.ray = new geometry.Ray(pos.x, pos.y, pos.z, 0, -1, 0)
-        if (PhysicsSystem.instance.raycast(this.ray))
-        {
-            this.isMatch = false
-            const r = PhysicsSystem.instance.raycastResults;
-            for (let i = 0; i < r.length; i++)
-            {
-                const item = r[i]
-                if (item.collider.node.layer == 1 << 0)
-                {
-                    let target = item.collider.node.parent
-                    if (target === this.target.node)
-                    {
-                        this.isMatch = true
-                        break
-                    }
-                }
-            }
-            if (this.isMatch)
-                this.target.setCyan()
-            else
-                this.target.setTransparent()
+  addBubble(hole: Node) {
+    let bb = instantiate(this.bubble_prefab)
+    this.node.addChild(bb)
+    bb.setPosition(hole.getPosition())
+    let angle = hole.getComponent(CustomAngle).angle
+    if (angle) bb.setRotationFromEuler(angle)
+    hole.getComponent(MeshRenderer).setMaterial(this.material, 0)
+    bb.children[0].getComponent(MeshRenderer).setMaterial(this.material, 0)
+    let mesh = hole.getComponent(MeshRenderer).mesh
+    bb.children[0].getComponent(MeshRenderer).mesh = mesh
+    this.addMeshCollider(bb.children[0])
+  }
+
+  addMeshCollider(node: Node) {
+    let meshrender = node.getComponent(MeshRenderer)
+    if (meshrender) {
+      if (!node.getComponent(MeshCollider)) {
+        node.addComponent(MeshCollider)
+      }
+      else {
+        node.getComponent(MeshCollider).enabled = true
+      }
+      node.getComponent(MeshCollider).mesh = meshrender.mesh
+    }
+  }
+
+  addShadow(node: Node) {
+    let meshrender = node.getComponent(MeshRenderer)
+    if (meshrender) {
+      meshrender.shadowCastingMode = MeshRenderer.ShadowCastingMode.ON
+      meshrender.receiveShadow = MeshRenderer.ShadowReceivingMode.ON
+    }
+  }
+
+  pick(pos: Vec3) {
+    // this.isCancerRotate = false
+    this.timer = new Date()
+    pos.y = this.target.node.position.y + this.bigpiece.match_height + 2
+    let temppos = pos.clone()
+    temppos.y = this.startpos.y + this.bigpiece.match_height + 2.5
+    tween(this.node)
+      .to(0.04, { position: temppos }, { easing: 'quadOut' })
+      .start()
+    // tween(this.node)
+    // .to(0.15, {scale: new Vec3(0.95, 1, 1.05)}, {easing: 'quadOut'})
+    // .to(0.15, {scale: new Vec3(1, 1, 1)}, {easing: 'quadIn'})
+    // .start()
+  }
+
+  drop(isSmallStretch: boolean) {
+    let date = new Date()
+    let diff = date.valueOf() - this.timer.valueOf()
+
+    if (diff <= 200 && this.isPickable) {
+      this.current_rotation.add3f(0, -90, 0)
+
+      tween(this.node).to(0.2, { eulerAngles: this.current_rotation }).start()
+    }
+    tween(this.node).to(0.2, { position: this.startpos }, { easing: 'quadOut' })
+      .call(() => {
+        if (!this.isPickable) {
+          let bigpiece = this.node.parent.getComponent(BigPiece)
+          bigpiece.addToPlate(this.node)
+          if (isSmallStretch)
+            bigpiece.smallStretch()
+          else {
+            bigpiece.bigStretch()
+            bigpiece.removeAllPieceTargets()
+          }
         }
-    }
-
-    checkTouched()
-    {
-        if (!this.isPickable) return
-        if (this.node.getPosition() != this.startpos)
-        {
-            tween(this.node).to(0.2, {position: this.startpos}).start()
-            this.target.setTransparent()
+        else {
+          tween(this.node)
+            .to(0.15, { scale: new Vec3(0.97, 1, 1.03) }, { easing: 'quadOut' })
+            .to(0.15, { scale: new Vec3(1, 1, 1) }, { easing: 'quadIn' })
+            .start()
         }
+      }).start()
+  }
+
+  match() {
+    this.isPickable = false
+    let pos = this.target.node.getPosition()
+    this.startpos = pos
+    this.startpos.y += this.bigpiece.match_height
+  }
+
+  rayCast() {
+    if (Math.abs(this.current_rotation.y) % 360 !== 0) return
+    let pos = this.node.getPosition()
+    this.ray = new geometry.Ray(pos.x, pos.y, pos.z, 0, -1, 0)
+    if (PhysicsSystem.instance.raycast(this.ray)) {
+      this.isMatch = false
+      const r = PhysicsSystem.instance.raycastResults;
+      for (let i = 0; i < r.length; i++) {
+        const item = r[i]
+        if (item.collider.node.layer == 1 << 0) {
+          let target = item.collider.node.parent
+          if (target === this.target.node) {
+            this.isMatch = true
+            break
+          }
+        }
+      }
+      if (this.isMatch)
+        this.target.setCyan()
+      else
+        this.target.setTransparent()
     }
+  }
+
+  checkTouched() {
+    if (!this.isPickable) return
+    if (this.node.getPosition() != this.startpos) {
+      tween(this.node).to(0.2, { position: this.startpos }).start()
+      this.target.setTransparent()
+    }
+  }
 
 }
 

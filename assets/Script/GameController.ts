@@ -87,9 +87,6 @@ export class GameController extends Component {
     @property(AudioClip)
     match_sound: AudioClip = null
 
-
-
-
     onLoad() {
         systemEvent.on(SystemEvent.EventType.TOUCH_START, this.onTouchStart, this);
         systemEvent.on(SystemEvent.EventType.TOUCH_MOVE, this.onTouchMove, this);
@@ -344,6 +341,7 @@ export class GameController extends Component {
                 }
             }
             this.objectHit.getComponent(Piece).rayCast()
+            // this.objectHit.getComponent(Piece).isCancerRotate = true
             this.isTouched = true
             this.unschedule(this.setTouchFalse)
             this.scheduleOnce(this.setTouchFalse, 2)
