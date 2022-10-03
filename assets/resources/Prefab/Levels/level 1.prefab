@@ -5315,7 +5315,7 @@
   },
   {
     "__type__": "cc.Node",
-    "_name": "apple_01_002 target-001",
+    "_name": "apple_01_002",
     "_objFlags": 0,
     "_parent": {
       "__id__": 1
@@ -6208,7 +6208,7 @@
   },
   {
     "__type__": "cc.Node",
-    "_name": "apple_02_004 target-001",
+    "_name": "apple_02_004",
     "_objFlags": 0,
     "_parent": {
       "__id__": 1
@@ -7101,7 +7101,7 @@
   },
   {
     "__type__": "cc.Node",
-    "_name": "apple_03_004 target-001",
+    "_name": "apple_03_004",
     "_objFlags": 0,
     "_parent": {
       "__id__": 1
@@ -8170,7 +8170,7 @@
   },
   {
     "__type__": "cc.Node",
-    "_name": "apple_04_007_0 target-001",
+    "_name": "apple_04_007_0",
     "_objFlags": 0,
     "_parent": {
       "__id__": 1
@@ -9064,7 +9064,7 @@
   },
   {
     "__type__": "cc.Node",
-    "_name": "apple_05_004_0 target-001",
+    "_name": "apple_05_004_0",
     "_objFlags": 0,
     "_parent": {
       "__id__": 1
@@ -10487,6 +10487,7 @@
     "__type__": "9c54f8WRMZDW4vajv+ssfPo",
     "_name": "",
     "_objFlags": 0,
+    "__editorExtras__": {},
     "node": {
       "__id__": 1
     },
